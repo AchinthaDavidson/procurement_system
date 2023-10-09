@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
-
-function App() {
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Sidebar from './components/Sidebar';
+import Order from './pages/Order';
+import Addsitemanager from './pages/Addsitemanager';
+import Ordersupplier from './pages/OrderSupplier'
+import Payment from './pages/Payment'
+import Supplierreg from './pages/SupplierReg'
+import Addsite from './pages/Addsite';
+// import Loginfrom from './components/logn';
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+   
+    <BrowserRouter>
+    
+      <Sidebar>
+        <Routes>
+          <Route path="/" element={<Order />} />
+          <Route path="/Addsitemanager" element={<Addsitemanager />} />
+          <Route path="/Ordersupplier" element={<Ordersupplier />} />
+          <Route path="/Payment" element={<Payment />} />
+          <Route path="/Supplierreg" element={<Supplierreg />} />
+          <Route path="/Addsite" element={<Addsite/>} />
+        </Routes>
+      </Sidebar>
+     
+    </BrowserRouter>
+    
   );
-}
+};
 
 export default App;
