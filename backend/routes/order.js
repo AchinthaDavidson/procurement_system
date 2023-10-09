@@ -41,8 +41,8 @@ router.route("/update/:id").put(async(req,res)=>{
 
     let Id = req.params.id;
 
-    const supplierid  = req.body.supplierid;
-
+    const supplierid  = req.body.data;
+console.log(req.body.data);
     const updateorder = {supplierid};  
 
     await order.updateOne({_id:Id},{$push:updateorder})

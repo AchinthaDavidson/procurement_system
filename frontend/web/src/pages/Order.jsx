@@ -18,7 +18,6 @@ function Order() {
   useEffect(() => {
     function getItems() {
       axios.get("http://localhost:8070/site/").then((res) => {
-        console.log(res.data);
         setsite(res.data);
 
       });
@@ -29,7 +28,6 @@ function Order() {
   useEffect(() => {
     function getItems() {
       axios.get("http://localhost:8070/order/").then((res) => {
-        console.log(res.data);
         setorder(res.data);
 
       });
@@ -42,7 +40,6 @@ function Order() {
   useEffect(() => {
     function getItems() {
       axios.get("http://localhost:8070/supplier/").then((res) => {
-        console.log(res.data);
         setsupplier(res.data);
 
       });
@@ -52,7 +49,6 @@ function Order() {
   useEffect(() => {
     function getItems() {
       axios.get("http://localhost:8070/product/order").then((res) => {
-        console.log(res.data);
         setproduct(res.data);
 
       });
@@ -85,7 +81,7 @@ function Order() {
   };
 
    const handlesubmit= ()=>{
- console.log(addedData)
+ 
     {addedData.map((item, index) => (
       addsupplier(item)
       ))}
@@ -97,11 +93,14 @@ function Order() {
       company:item.company,
       qty:item.qty
     }
-console.log(data)
- 
+
+    const data1={data}
+
+
+ const link ="http://localhost:8070/order/update/"+item.id;
 
     axios
-    .put('http://localhost:8070/order/update/'+item.id,data )
+    .put(link,data1 )
     .then(() => {
       toast.success("New Supplier added successfully");
     })
@@ -136,12 +135,12 @@ console.log(data)
               }
             }).map ((items, index2) => (
               <>
-                <tr id={items._id} hidden>
+                <tr >
                   <th>Site: {items.name}</th>
 
                 </tr>
 
-                <table border="1" id ={items._id+1} hidden> 
+                <table border="1" > 
                   <tr>
                     <td>Item</td>
                     <td>Qty</td>
@@ -153,8 +152,8 @@ console.log(data)
 
                   {order.filter((val) => {
                     if (val.siteid.toLowerCase().includes(items._id.toLowerCase())) {
-                      document.getElementById(items._id+1).hidden=false
-                      document.getElementById(items._id).hidden=false
+                      // document.getElementById(items._id+1).hidden=false
+                      // document.getElementById(items._id).hidden=false
                       return val;
                     }
                   }).map((items, index1) => (
