@@ -117,7 +117,7 @@ function Order() {
 
         <div>
           <input type="text" style={{ height: "40px" }} placeholder=" Search Items..." onChange={(event) => {
-            setSearchTerm(event.target.value);
+            setSearchTerm(event.tar0get.value);
           }} />
 
 
