@@ -3,6 +3,7 @@ import axios from "axios";
 import Niv from '../components/Niv';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import styles from '../Style/order.module.css';
 
 function Order() {
 
@@ -122,9 +123,9 @@ function Order() {
 
 
         </div>
-        <div className="table1">
+        <div className={styles.table1}>
 
-          <table border="1">
+          <table  className={styles.table1}>
             {site.filter((val) => {
               if (searchTerm === "") {
                 return val;
