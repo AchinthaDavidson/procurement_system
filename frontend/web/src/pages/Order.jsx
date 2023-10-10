@@ -125,7 +125,7 @@ function Order() {
         </div>
         <div className={styles.table1}>
 
-          <table  className={styles.table1}>
+          <table  className={styles.outertable}>
             {site.filter((val) => {
               if (searchTerm === "") {
                 return val;
@@ -141,13 +141,12 @@ function Order() {
 
                 </tr>
 
-                <table border="1" > 
+                <table className={styles.innertable} border="1"> 
                   <tr>
                     <td>Item</td>
-                    <td>Qty</td>
-                    <td>supplier</td>
-                    <td>Qty</td>
-                    <td></td>
+                    <td>Quantity Required</td>
+                    <td>Choose Supplier</td>
+                    <td colSpan={2}>Ordering Quantity</td>
                   </tr>
 
 
@@ -178,7 +177,7 @@ function Order() {
 
                                 }).map((supplier, index) => (
                                   <>
-                                    <option value={supplier._id}> {supplier.company}:{product.name},</option>
+                                    <option className={styles.dropdown} value={supplier._id}>Supplier:{supplier.company} | Item:{product.name} | Unit Price: {product.qty}</option>
                                   </>
                                 ))
                                 }
@@ -191,10 +190,10 @@ function Order() {
 
                         </td>
                         <td>
-                          <input type="number" id="numberInput"  onChange={handleInputChange} />
+                          <input type="number" min="0" max={items.qty} id="numberInput"  onChange={handleInputChange} />
                         </td>
                         <td>
-                          <button
+                          <button className={styles.addbtn}
                             onClick={() => handleAddClick(selectedOption, numberValue,items._id,index1)}
                           >
                             ADD
@@ -206,8 +205,9 @@ function Order() {
 
                           <table id="new">
                             <tr>
-                              <th>company</th>
-                              <th>qty</th>
+                              <th>Supplier</th>
+                              <th>Ordered Quantity</th>
+                              <th>Total cost</th>
                             </tr>
                             {addedData.filter((val) => {
                               if (val.id.includes(items._id)) {
@@ -233,9 +233,9 @@ function Order() {
                   ))}
 
                   <tr colSpan="5" >
-                    <td> <button
+                    <td> <button className={styles.sendorder}
                             onClick={() => handlesubmit()}
-                          >Send order</button></td>
+                          >Place order</button></td>
                   </tr>
 
                 </table>
