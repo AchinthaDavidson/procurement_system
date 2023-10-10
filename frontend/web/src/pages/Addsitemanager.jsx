@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState} from 'react';
 import Niv from '../components/Niv';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -25,6 +25,7 @@ function Addsitemanager() {
     contact: '',
     password:'',
   };
+  const [users, setUsers] = useState([]);
 
   const generatePassword = () => {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
@@ -77,6 +78,43 @@ function Addsitemanager() {
     resetForm();
   };
 
+  useEffect(() => {
+    function getsitemanager() {
+      axios.get("http://localhost:8070/sitemanager/").then((res) => {
+        // console.log(res.data);
+        setUsers(res.data);
+        // console.log(orders[1]);
+      });
+    }
+    getsitemanager();
+  }, []);
+
+
+
+ 
+
+  const onDelete = (userId) => {
+    setUsers(users.filter((user) => user.id !== userId));
+  };
+
+  const [editableUserId, setEditableUserId] = useState(null);
+  const [editedName, setEditedName] = useState('');
+  const [editedEmail, setEditedEmail] = useState('');
+
+  const handleEdit = (user) => {
+    setEditableUserId(user.id);
+    setEditedName(user.name);
+    setEditedEmail(user.email);
+  };
+
+  const handleSave = (user) => {
+    // Implement save functionality here
+    console.log(`Save user: ${user.id}, Name: ${editedName}, Email: ${editedEmail}`);
+    setEditableUserId(null);
+  };
+
+
+
   return (
     <div>
        <ToastContainer position="top-right" theme="colored" />
@@ -123,7 +161,59 @@ function Addsitemanager() {
           </Form>
         )}
       </Formik>
+
+      <div className={styles.container}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>
+                {editableUserId === user._id ? (
+                  <input
+                    type="text"
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                  />
+                ) : (
+                  user.name
+                )}
+              </td>
+              <td>
+                {editableUserId === user.id ? (
+                  <input
+                    type="text"
+                    value={editedEmail}
+                    onChange={(e) => setEditedEmail(e.target.value)}
+                  />
+                ) : (
+                  user.email
+                )}
+              </td>
+              <td>
+                {editableUserId === user.id ? (
+                  <button onClick={() => handleSave(user)}>Save</button>
+                ) : (
+                  <button onClick={() => handleEdit(user)}>Edit</button>
+                )}
+              </td>
+              <td>
+                <button onClick={() => onDelete(user.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
       </div>
+      
     </div>
   );
 }
