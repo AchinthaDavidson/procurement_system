@@ -97,7 +97,16 @@ function Addsitemanager() {
  
 
   const onDelete = (userId) => {
-    setUsers(users.filter((user) => user.id !== userId));
+
+    axios
+    .delete(`http://localhost:8070/sitemanager/delete/${userId}`)
+    .then(() => {
+      toast.success("New Supplier added successfully");
+    })
+    .catch((err) => {
+      toast.error("New Supplier added unsuccessfully");
+    });
+    setUsers(users.filter((user) => user._id !== userId));
   };
 
 
