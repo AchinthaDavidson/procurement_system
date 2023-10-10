@@ -23,6 +23,10 @@
     padding-top: 5px;
 }
 
+.placeordertr{
+    border: none;
+}
+
 .addbtn{
     width: 100%;
     padding: 10px;
@@ -32,4 +36,8 @@
     background-color: rgba(53, 39, 68, 0.781);
     color: white;
     border: none;
+}
+
+.tabattributes{
+    font-weight: bolder;
 }

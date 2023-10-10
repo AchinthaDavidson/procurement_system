@@ -142,7 +142,7 @@ function Order() {
                 </tr>
 
                 <table className={styles.innertable} border="1"> 
-                  <tr>
+                  <tr className={styles.tabattributes}>
                     <td>Item</td>
                     <td>Quantity Required</td>
                     <td>Choose Supplier</td>
@@ -233,7 +233,7 @@ function Order() {
                   ))}
 
                   <tr colSpan="5" >
-                    <td> <button className={styles.sendorder}
+                    <td className={styles.placeordertr}> <button className={styles.sendorder} 
                             onClick={() => handlesubmit()}
                           >Place order</button></td>
                   </tr>
