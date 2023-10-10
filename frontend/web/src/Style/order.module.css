@@ -1,5 +1,35 @@
-.table1{
+.outertable{
+    width: 75%;
+    margin: auto;
+}
+
+.innertable{
     width: 100%;
-    border: 1;
-    color: red;
+    margin-bottom: 50px;
+}
+
+.border{
+    border-radius: 20px;
+}
+
+/* button */
+.sendorder{ 
+    background-color: rgba(53, 39, 68, 0.781);
+    color: white;
+    border-radius: 5px;
+    width: 100%;
+    margin: auto;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+.addbtn{
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 10px;
+    background-color: rgba(53, 39, 68, 0.781);
+    color: white;
+    border: none;
 }
