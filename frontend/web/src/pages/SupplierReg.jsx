@@ -1,5 +1,5 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
@@ -27,7 +27,11 @@ const initialValues = {
     password: '',
 
   };
-
+  const [users, setUsers] = useState([]);
+  const [editableUserId, setEditableUserId] = useState(null);
+  const [editedName, setEditedName] = useState('');
+  const [editedEmail, setEditedEmail] = useState('');
+  const [editedcontact, setcontact] = useState('');
   const generatePassword = () => {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
     let newPassword = '';
@@ -83,6 +87,56 @@ const initialValues = {
     resetForm();
   };
 
+
+  useEffect(() => {
+    function getsitemanager() {
+      axios.get("http://localhost:8070/supplier/getsupplier/").then((res) => {
+        console.log(res.data);
+        setUsers(res.data);
+        // console.log(orders[1]);
+      });
+    }
+    getsitemanager();
+  }, []);
+
+
+ 
+
+  const onDelete = (userId) => {
+    setUsers(users.filter((user) => user.id !== userId));
+  };
+
+
+  const handleEdit = (user) => {
+    setEditableUserId(user._id);
+    setEditedName(user.company);
+    setEditedEmail(user.email);
+    setcontact(user.contact)
+    
+  };
+
+  const handleSave = (user) => {
+    // Implement save functionality here
+    console.log(`Save user: ${user._id}, Name: ${editedName}, Email: ${editedEmail}`);
+
+    const values={
+      name:editedName,
+      email:editedEmail,
+      contact:editedcontact
+    }
+    axios
+    .put(`http://localhost:8070/supplier/update/${user._id}`, values)
+    .then(() => {
+      toast.success("New Supplier added successfully");
+    })
+    .catch((err) => {
+      toast.error("New Supplier added unsuccessfully");
+    });
+
+
+    setEditableUserId(null);
+  };
+
   return (
     <div>
         <ToastContainer position="top-right" theme="colored" />
@@ -132,8 +186,75 @@ const initialValues = {
             )}
           </Formik>
         </div>
-      </div>
+
+        <div className={styles.container}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>contact</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>
+                {editableUserId === user._id ? (
+                  <input
+                    type="text"
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                  />
+                ) : (
+                  user.company
+                )}
+              </td>
+              <td>
+                {editableUserId === user._id ? (
+                  <input
+                    type="text"
+                    value={editedEmail}
+                    onChange={(e) => setEditedEmail(e.target.value)}
+                  />
+                ) : (
+                  user.email
+                )}
+              </td>
+              <td>
+                {editableUserId === user._id ? (
+                  <input
+                    type="text"
+                    value={editedcontact}
+                    onChange={(e) => setcontact(e.target.value)}
+                  />
+                ) : (
+                  user.contact
+                )}
+              </td>
+              <td>
+                {editableUserId === user._id ? (
+                  <button onClick={() => handleSave(user)}>Save</button>
+                ) : (
+                  <button onClick={() => handleEdit(user)}>Edit</button>
+                )}
+              </td>
+              <td>
+                <button onClick={() => onDelete(user._id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
+      </div>
+
+
+
+      </div>
+    
   );
 }
 

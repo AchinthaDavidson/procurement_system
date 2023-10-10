@@ -91,7 +91,7 @@ function Addsitemanager() {
       });
     }
     getsitemanager();
-  }, [editableUserId]);
+  }, []);
 
 
  

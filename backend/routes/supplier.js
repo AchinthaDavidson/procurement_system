@@ -76,6 +76,36 @@ router.route("/").get((req,res)=>{
   })
 })
 
+router.route("/getsupplier").get((req,res)=>{
+  supplier.find(). then((supplier)=>{
+      res.json(supplier)
+  }).catch((err)=>{
+      console.log(err)
+  })
+})
+
+
+router.route("/update/:id").put(async(req,res)=>{
+
+  let Id = req.params.id;
+
+  
+
+ 
+  const company  = req.body.name;
+  const email=req.body.email;
+  const contact =req.body.contact;
+
+  const updatemanager = {company,email,contact};  
+console.log(updatemanager)
+  await supplier.updateOne({_id:Id},{$set:updatemanager})
+  .then(()=>{
+      res.status(200).send({status:"manager updated"})
+  }).catch((err)=>{
+      console.log(err);
+      res.status(500).send({status:"manager update failed", error:err});
+  })
+})
 
 
 
