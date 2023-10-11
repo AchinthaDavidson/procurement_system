@@ -4,9 +4,12 @@ import Niv from '../components/Niv';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios";
-import styles from '../Style/site.module.css';
+import styles from '../Style/addsite.module.css';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FiEdit } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
+import { GiSaveArrow } from "react-icons/gi";
 
 function Addsite() {
     const [sitemanager, setsitemanager] = useState([]);
@@ -180,12 +183,10 @@ function Addsite() {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>company</th>
-            <th>location</th>
-            <th>site manager</th>
-            <th>Budget</th>
-            <th></th>
-            <th></th>
+            <th>Site Name</th>
+            <th>Location</th>
+            <th>Site Manager</th>
+            <th colSpan={3}>Budget</th>
           </tr>
         </thead>
         <tbody>
@@ -234,13 +235,13 @@ function Addsite() {
               </td>
               <td>
                 {editableUserId === user._id ? (
-                  <button onClick={() => handleSave(user)}>Save</button>
+                  <button onClick={() => handleSave(user)}><GiSaveArrow size={20}/></button>
                 ) : (
-                  <button onClick={() => handleEdit(user)}>Edit</button>
+                  <button onClick={() => handleEdit(user)}><FiEdit size={20}/></button>
                 )}
               </td>
               <td>
-                <button onClick={() => onDelete(user._id)}>Delete</button>
+                <button onClick={() => onDelete(user._id)}><FiTrash2 size={20}/></button>
               </td>
             </tr>
           ))}
