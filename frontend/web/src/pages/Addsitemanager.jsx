@@ -34,6 +34,17 @@ function Addsitemanager() {
   const [editedName, setEditedName] = useState('');
   const [editedEmail, setEditedEmail] = useState('');
 
+  useEffect(() => {
+    function getsitemanager() {
+      axios.get("http://localhost:8070/site/").then((res) => {
+        // console.log(res.data);
+        setsite(res.data);
+        // console.log(orders[1]);
+      });
+    }
+    getsitemanager();
+  }, []);
+
   const generatePassword = () => {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
     let newPassword = '';
@@ -142,16 +153,7 @@ function Addsitemanager() {
     setEditableUserId(null);
   };
 
-  useEffect(() => {
-    function getsitemanager() {
-      axios.get("http://localhost:8070/site/").then((res) => {
-        // console.log(res.data);
-        setsite(res.data);
-        // console.log(orders[1]);
-      });
-    }
-    getsitemanager();
-  }, []);
+
 
 
   return (
