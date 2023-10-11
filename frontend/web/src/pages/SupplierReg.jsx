@@ -8,7 +8,7 @@ import Niv from '../components/Niv';
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from '../Style/site.module.css';
+import styles from '../Style/Supplier.module.css';
 import { FiEdit } from "react-icons/fi";
 import { FiTrash2 } from "react-icons/fi";
 import { GiSaveArrow } from "react-icons/gi";
@@ -164,7 +164,7 @@ const initialValues = {
             {({ resetForm }) => (
               <Form>
                 <div className={styles.formGroup}>
-                  <label htmlFor="companyName">Company Name</label>
+                  <label htmlFor="companyName">Supplier Name</label>
                   <Field type="text" name="companyName" className={styles.input} />
                   <ErrorMessage name="companyName" component="div" className={styles.error} />
                 </div>
