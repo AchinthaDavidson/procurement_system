@@ -82,7 +82,7 @@ function Addsite() {
     
       const handleEdit = (user) => {
         setEditableUserId(user._id);
-        setEditedsitemanager("select manager");
+        setEditedsitemanager(user.managerId);
         setEditedbudget(user.budget);
         
       };
@@ -212,7 +212,9 @@ function Addsite() {
                         return val
                     }
                   }).map((items,index)=>(
-                    <>{items.name}</>
+                    <>{items.name}
+                    
+                    </>
                     
                   ))
                 )}
