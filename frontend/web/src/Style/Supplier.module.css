@@ -62,4 +62,38 @@
   .clearButton:hover {
     background-color: #999;
   }
-  
+  /* src/components/UserTable.module.css */
+.container {
+  margin: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.table button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: blue;
+  text-decoration: underline;
+  padding: 0;
+  margin: 0;
+}
+
+.table button:hover {
+  text-decoration: none;
+}

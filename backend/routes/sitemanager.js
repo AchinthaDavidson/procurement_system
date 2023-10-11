@@ -75,4 +75,41 @@ router.route("/login").post(validate([
  
 })
 
+
+/* update */
+router.route("/update/:id").put(async(req,res)=>{
+
+  let Id = req.params.id;
+
+  
+
+ 
+  const name  = req.body.name;
+  const email=req.body.email;
+
+  const updatemanager = {name,email};  
+console.log(updatemanager)
+  await Sitemanager.updateOne({_id:Id},{$set:updatemanager})
+  .then(()=>{
+      res.status(200).send({status:"manager updated"})
+  }).catch((err)=>{
+      console.log(err);
+      res.status(500).send({status:"manager update failed", error:err});
+  })
+})
+
+
+router.route("/delete/:id").delete(async(req,res)=>{
+    
+  
+
+  await Sitemanager.deleteOne({_id:req.params.id}).then(()=>{
+      res.status(200).send({status:"order details deleted"})
+  }).catch((err)=>{
+      console.log(err);
+      res.status(500).send({status:"order details delete failed", error:err});
+  })
+})
+
+
 module.exports=router;

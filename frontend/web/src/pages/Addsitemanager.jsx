@@ -26,6 +26,9 @@ function Addsitemanager() {
     password:'',
   };
   const [users, setUsers] = useState([]);
+  const [editableUserId, setEditableUserId] = useState(null);
+  const [editedName, setEditedName] = useState('');
+  const [editedEmail, setEditedEmail] = useState('');
 
   const generatePassword = () => {
     const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()';
@@ -78,6 +81,7 @@ function Addsitemanager() {
     resetForm();
   };
 
+  
   useEffect(() => {
     function getsitemanager() {
       axios.get("http://localhost:8070/sitemanager/").then((res) => {
@@ -90,26 +94,47 @@ function Addsitemanager() {
   }, []);
 
 
-
  
 
   const onDelete = (userId) => {
-    setUsers(users.filter((user) => user.id !== userId));
+
+    axios
+    .delete(`http://localhost:8070/sitemanager/delete/${userId}`)
+    .then(() => {
+      toast.success("New Supplier added successfully");
+    })
+    .catch((err) => {
+      toast.error("New Supplier added unsuccessfully");
+    });
+    setUsers(users.filter((user) => user._id !== userId));
   };
 
-  const [editableUserId, setEditableUserId] = useState(null);
-  const [editedName, setEditedName] = useState('');
-  const [editedEmail, setEditedEmail] = useState('');
 
   const handleEdit = (user) => {
-    setEditableUserId(user.id);
+    setEditableUserId(user._id);
     setEditedName(user.name);
     setEditedEmail(user.email);
+    
   };
 
   const handleSave = (user) => {
     // Implement save functionality here
-    console.log(`Save user: ${user.id}, Name: ${editedName}, Email: ${editedEmail}`);
+    console.log(`Save user: ${user._id}, Name: ${editedName}, Email: ${editedEmail}`);
+
+    const values={
+      name:editedName,
+      email:editedEmail
+    }
+    axios
+    .put(`http://localhost:8070/sitemanager/update/${user._id}`, values)
+    .then(() => {
+      toast.success("New Supplier added successfully");
+    })
+    .catch((err) => {
+      toast.error("New Supplier added unsuccessfully");
+    });
+
+
     setEditableUserId(null);
   };
 
@@ -187,7 +212,7 @@ function Addsitemanager() {
                 )}
               </td>
               <td>
-                {editableUserId === user.id ? (
+                {editableUserId === user._id ? (
                   <input
                     type="text"
                     value={editedEmail}
@@ -198,14 +223,14 @@ function Addsitemanager() {
                 )}
               </td>
               <td>
-                {editableUserId === user.id ? (
+                {editableUserId === user._id ? (
                   <button onClick={() => handleSave(user)}>Save</button>
                 ) : (
                   <button onClick={() => handleEdit(user)}>Edit</button>
                 )}
               </td>
               <td>
-                <button onClick={() => onDelete(user.id)}>Delete</button>
+                <button onClick={() => onDelete(user._id)}>Delete</button>
               </td>
             </tr>
           ))}
