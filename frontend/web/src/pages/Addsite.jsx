@@ -25,7 +25,7 @@ function Addsite() {
   const [editesitemanager, setEditedsitemanager] = useState('');
   const [editedbudget, setEditedbudget] = useState('');
 
-    useEffect(() => {
+    // useEffect(() => {
         function getsitemanager() {
           axios.get("http://localhost:8070/sitemanager/").then((res) => {
             // console.log(res.data);
@@ -34,7 +34,7 @@ function Addsite() {
           });
         }
         getsitemanager();
-      }, []);
+      // }, []);
 
     const handleSubmit = (values, { resetForm }) => {
 
@@ -72,7 +72,7 @@ function Addsite() {
       const onDelete = (userId) => {
     
         axios
-        .delete(`http://localhost:8070/sitemanager/delete/${userId}`)
+        .delete(`http://localhost:8070/site/delete/${userId}`)
         .then(() => {
           toast.success("New Supplier added successfully");
         })
@@ -80,6 +80,7 @@ function Addsite() {
           toast.error("New Supplier added unsuccessfully");
         });
         setUsers(users.filter((user) => user._id !== userId));
+        getsitemanager();
       };
     
     
@@ -109,6 +110,7 @@ function Addsite() {
     
     
         setEditableUserId(null);
+        getsitemanager();
       };
 
 
