@@ -8,6 +8,9 @@ import emailjs from 'emailjs-com';
 import styles from '../Style/site.module.css';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FiEdit } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
+import { GiSaveArrow } from "react-icons/gi";
 
 const validationSchema = Yup.object().shape({
   
@@ -68,10 +71,10 @@ function Addsitemanager() {
     axios
     .post("http://localhost:8070/sitemanager/add", values)
     .then(() => {
-      toast.success("New Supplier added successfully");
+      toast.success("New Site manager added successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier added unsuccessfully");
+      toast.error("Your request was unsuccessfull");
     });
 
 
@@ -101,10 +104,10 @@ function Addsitemanager() {
     axios
     .delete(`http://localhost:8070/sitemanager/delete/${userId}`)
     .then(() => {
-      toast.success("New Supplier added successfully");
+      toast.success("New Site manager added successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier added unsuccessfully");
+      toast.error("Your request was unsuccessfull");
     });
     setUsers(users.filter((user) => user._id !== userId));
   };
@@ -128,10 +131,10 @@ function Addsitemanager() {
     axios
     .put(`http://localhost:8070/sitemanager/update/${user._id}`, values)
     .then(() => {
-      toast.success("New Supplier added successfully");
+      toast.success("New Site manager added successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier added unsuccessfully");
+      toast.error("Your request was unsuccessfull");
     });
 
 
@@ -192,9 +195,7 @@ function Addsitemanager() {
         <thead>
           <tr>
             <th>Name</th>
-            <th>Email</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th colSpan={3}>Email</th>
           </tr>
         </thead>
         <tbody>
@@ -222,20 +223,21 @@ function Addsitemanager() {
                   user.email
                 )}
               </td>
-              <td>
+              <td className={styles.btns}>
                 {editableUserId === user._id ? (
-                  <button onClick={() => handleSave(user)}>Save</button>
+                  <button onClick={() => handleSave(user)}><GiSaveArrow size={20}/></button>
                 ) : (
-                  <button onClick={() => handleEdit(user)}>Edit</button>
+                  <button onClick={() => handleEdit(user)}><FiEdit size={20}/></button>
                 )}
               </td>
-              <td>
-                <button onClick={() => onDelete(user._id)}>Delete</button>
+              <td className={styles.btns}>
+                <button onClick={() => onDelete(user._id)}><FiTrash2 size={20}/></button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+  
     </div>
       </div>
       

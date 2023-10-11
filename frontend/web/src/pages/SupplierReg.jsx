@@ -8,7 +8,10 @@ import Niv from '../components/Niv';
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from '../Style/Supplier.module.css'
+import styles from '../Style/site.module.css'
+import { FiEdit } from "react-icons/fi";
+import { FiTrash2 } from "react-icons/fi";
+import { GiSaveArrow } from "react-icons/gi";
 
 const validationSchema = Yup.object().shape({
   companyName: Yup.string().required('Company Name is required'),
@@ -200,11 +203,9 @@ const initialValues = {
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>contact</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>Supplier Name</th>
+            <th>Contact No</th>
+            <th colSpan={3}>Email</th>
           </tr>
         </thead>
         <tbody>
@@ -245,13 +246,13 @@ const initialValues = {
               </td>
               <td>
                 {editableUserId === user._id ? (
-                  <button onClick={() => handleSave(user)}>Save</button>
+                  <button onClick={() => handleSave(user)}><GiSaveArrow size={20}/></button>
                 ) : (
-                  <button onClick={() => handleEdit(user)}>Edit</button>
+                  <button onClick={() => handleEdit(user)}><FiEdit size={20}/></button>
                 )}
               </td>
               <td>
-                <button onClick={() => onDelete(user._id)}>Delete</button>
+                <button onClick={() => onDelete(user._id)}><FiTrash2 size={20}/></button>
               </td>
             </tr>
           ))}
