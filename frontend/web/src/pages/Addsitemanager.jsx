@@ -248,7 +248,7 @@ function Addsitemanager() {
                 <button onClick={() => onDelete(user._id)}><FiTrash2 size={20}/></button>
               </td>
             </tr>
-            <tr><td colSpan={4} style={{background:'#453953'}}>Site</td></tr>
+            <tr><td colSpan={4} style={{background:'rgba(53, 39, 68, 0.742)',color:'white'}}>Site</td></tr>
             <tr>
             
               <td >
