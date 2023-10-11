@@ -19,7 +19,7 @@ function Addsite() {
     };
     const [users, setUsers] = useState([]);
   const [editableUserId, setEditableUserId] = useState(null);
-  const [editedName, setEditedName] = useState('');
+  const [editesitemanager, setEditedsitemanager] = useState('');
   const [editedbudget, setEditedbudget] = useState('');
 
     useEffect(() => {
@@ -82,7 +82,7 @@ function Addsite() {
     
       const handleEdit = (user) => {
         setEditableUserId(user._id);
-        setEditedName(user.name);
+        setEditedsitemanager("select manager");
         setEditedbudget(user.budget);
         
       };
@@ -90,13 +90,13 @@ function Addsite() {
       const handleSave = (user) => {
         // Implement save functionality here
         // console.log(`Save user: ${user._id}, Name: ${editedName}, Email: ${editedEmail}`);
-    
+    alert(editesitemanager)
         const values={
-          name:editedName,
+          siteManagerName:editesitemanager,
           budget:editedbudget
         }
         axios
-        .put(`http://localhost:8070/sitemanager/update/${user._id}`, values)
+        .put(`http://localhost:8070/site/update/${user._id}`, values)
         .then(() => {
           toast.success("New Supplier added successfully");
         })
@@ -198,15 +198,24 @@ function Addsite() {
                 {user.location}
               </td>
               <td>
-              {/* {editableUserId === user._id ? (
-                  <input
-                    type="text"
-                    value={editedEmail}
-                    onChange={(e) => setEditedEmail(e.target.value)}
-                  />
+              {editableUserId === user._id ? (
+                 <select name="" id="" onClick={(e)=>setEditedsitemanager(e.target.value)}>
+                    {sitemanager.map((sitemanager, index) => (
+                                        <option key={index} value={sitemanager._id} >
+                                            {sitemanager.name}
+                                        </option>
+                                    ))}
+                 </select>
                 ) : (
-                  user.email
-                )} */}
+                  sitemanager.filter((val)=>{
+                    if(val._id.includes(user.managerId )){
+                        return val
+                    }
+                  }).map((items,index)=>(
+                    <>{items.name}</>
+                    
+                  ))
+                )}
 
               </td>
 
