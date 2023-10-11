@@ -17,34 +17,37 @@ const Sidebar = ({children}) => {
    
     const menuItem=[
         {
-            path:"/",
-            name:"Order Requisiton Form",
-            icon:<FaWpforms/>
-        },
-        {
-            path:"/Ordersupplier",
-            name:"Order History",
-            icon:<FaHistory/>
-        },
-        {
             path:"/Addsitemanager",
             name:"Add New Site Manager",
             icon:<FaUserAlt/>
-        },
-        {
-            path:"/Supplierreg ",
-            name:"Supplier Register",
-            icon:<FiUserPlus/>
-        },
-        {
-            path:"/Payment",
-            name:"Payment",
-            icon:<MdPayment/>
+          
         },
         {
             path:"/Addsite",
             name:"Add New Site",
             icon:<MdOutlineConstruction/>
+        },
+        {
+            path:"/Supplierreg ",
+            name:"Supplier Registration",
+            icon:<FiUserPlus/>
+           
+        },
+        {
+            path:"/Ordersupplier",
+            name:"All Orders",
+            icon:<FaHistory/>
+        },
+        {
+            path:"/",
+            name:"Order Requisiton Form",
+            icon:<FaWpforms/>
+            
+        },
+        {
+            path:"/Payment",
+            name:"Payment",
+            icon:<MdPayment/>
         }
     ]
     return (
