@@ -248,10 +248,10 @@ function Addsitemanager() {
                 <button onClick={() => onDelete(user._id)}><FiTrash2 size={20}/></button>
               </td>
             </tr>
-            <tr><td colSpan={4}>Site</td></tr>
+            <tr><td colSpan={4} style={{background:'#453953'}}>Site</td></tr>
             <tr>
             
-              <td>
+              <td >
               {site.filter((val) => {
               if (
                 val.managerId.includes(user._id)
