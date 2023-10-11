@@ -13,6 +13,10 @@ const siteSchema=new Schema({
         type: String,
         required: true
     },
+    budget:{
+        type:Number,
+        required:true
+    }
 
   
     

@@ -14,6 +14,8 @@ function Addsite() {
         siteName: '',
         location: '',
         siteManagerName: '',
+        budget:''
+
     };
 
     useEffect(() => {
@@ -51,6 +53,7 @@ function Addsite() {
         siteName: Yup.string().required('Site Name is required'),
         location: Yup.string().required('Location is required'),
         siteManagerName: Yup.string().required('Site Manager Name is required'),
+        budget:Yup.number().required("budget is required")
     });
     return (
         <div>
@@ -90,6 +93,11 @@ function Addsite() {
                                     ))}
                                 </Field>
                                 <ErrorMessage name="siteManagerName" component="div" className={styles.error} />
+                            </div>
+                            <div className={styles.formGroup}>
+                                <label htmlFor="budget">Budget</label>
+                                <Field type="text" name="budget" className={styles.input} />
+                                <ErrorMessage name="budget" component="div" className={styles.error} />
                             </div>
 
                             <button

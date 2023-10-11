@@ -8,13 +8,14 @@ router.route("/add").post(async (req,res)=>{
     const name=req.body.siteName
     const location=req.body.location
     const managerId=req.body.siteManagerName
-   
+    const budget=req.body.budget
 
 
     const newsite =new  site({
         name,
         location,
         managerId,
+        budget,
     })
   
     newsite.save().then(()=>{
