@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import {
-    FaTh,
+    FaWpforms,
+    FaHistory,
     FaBars,
-    FaUserAlt,
-    FaBeer,
-    FaPizzaSlice
+    FaUserAlt
 
 }from "react-icons/fa";
-import{ImSpoonKnife}from "react-icons/im";
-import{BiFoodMenu}from "react-icons/bi";
 import { NavLink } from 'react-router-dom';
+import { FiUserPlus } from "react-icons/fi";
+import { MdPayment } from "react-icons/md";
+import { MdOutlineConstruction } from "react-icons/md";
 
 const Sidebar = ({children}) => {
     const[isOpen ,setIsOpen] = useState(false);
@@ -18,13 +18,13 @@ const Sidebar = ({children}) => {
     const menuItem=[
         {
             path:"/",
-            name:"Order",
-            icon:<FaTh/>
+            name:"Order Requisiton Form",
+            icon:<FaWpforms/>
         },
         {
             path:"/Ordersupplier",
-            name:"Order Supplier",
-            icon:<BiFoodMenu/>
+            name:"Order History",
+            icon:<FaHistory/>
         },
         {
             path:"/Addsitemanager",
@@ -34,47 +34,25 @@ const Sidebar = ({children}) => {
         {
             path:"/Supplierreg ",
             name:"Supplier Register",
-            icon:<ImSpoonKnife/>
+            icon:<FiUserPlus/>
         },
         {
             path:"/Payment",
             name:"Payment",
-            icon:<FaBeer/>
+            icon:<MdPayment/>
         },
         {
             path:"/Addsite",
             name:"Add New Site",
-            icon:<FaPizzaSlice/>
-        },
-        // {
-        //     path:"/Waiter",
-        //     name:"Waiter",
-        //     icon:<FaUserAlt/>
-        // },
-       
-        
-        // {
-        //     path:"/Driver",
-        //     name:"Driver",
-        //     icon:<FaCarSide/>
-        // },
-        // {
-        //     path:"/Map",
-        //     name:"Map",
-        //     icon:<FaMap/>
-        // },
-        // {
-        //     path:"/QandA",
-        //     name:"Q&A",
-        //     icon:<FaQuestionCircle/>
-        // }
+            icon:<MdOutlineConstruction/>
+        }
     ]
     return (
         <div className="container">
-           <div style={{width: isOpen ? "200px" : "50px"}} className="sidebar">
+           <div style={{width: isOpen ? "250px" : "50px"}} className="sidebar">
                <div className="top_section">
-                   <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Palladium</h1>
-                   <div style={{marginLeft: isOpen ? "35px" : "0px"}} className="bars">
+                   <h1 style={{display: isOpen ? "block" : "none", paddingRight: isOpen ? "10px" : "20px"}} className="logo">ConPro</h1>
+                   <div style={{marginLeft: isOpen ? "80px" : "0px"}} className="bars">
                        <FaBars onClick={toggle}/>
                    </div>
                </div>
