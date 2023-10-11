@@ -91,7 +91,7 @@ const initialValues = {
   };
 
 
-  useEffect(() => {
+
     function getsitemanager() {
       axios.get("http://localhost:8070/supplier/getsupplier/").then((res) => {
         console.log(res.data);
@@ -100,7 +100,7 @@ const initialValues = {
       });
     }
     getsitemanager();
-  }, []);
+  
 
 
  
@@ -145,7 +145,7 @@ const initialValues = {
       toast.error("New Supplier was not added successfully");
     });
 
-
+    getsitemanager();
     setEditableUserId(null);
   };
 

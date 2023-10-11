@@ -67,4 +67,16 @@ router.route("/update/:id").put(async(req,res)=>{
     })
   })
 
+
+  router.route("/delete/:id").delete(async(req,res)=>{
+    
+  
+
+    await site.deleteOne({_id:req.params.id}).then(()=>{
+        res.status(200).send({status:"order details deleted"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"order details delete failed", error:err});
+    })
+})
 module.exports=router;
