@@ -8,13 +8,13 @@ import Niv from '../components/Niv';
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from '../Style/site.module.css'
+import styles from '../Style/site.module.css';
 import { FiEdit } from "react-icons/fi";
 import { FiTrash2 } from "react-icons/fi";
 import { GiSaveArrow } from "react-icons/gi";
 
 const validationSchema = Yup.object().shape({
-  companyName: Yup.string().required('Company Name is required'),
+  companyName: Yup.string().required('Supplier Name is required'),
   contactNumber: Yup.number().required('Contact Number is required'),
   email: Yup.string().email('Invalid email address').required('Email is required'),
 });
@@ -78,7 +78,7 @@ const initialValues = {
       toast.success("New Supplier added successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier added unsuccessfully");
+      toast.error("New Supplier was not added successfully");
     });
 
    
@@ -112,7 +112,7 @@ const initialValues = {
       toast.success("New Supplier added successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier added unsuccessfully");
+      toast.error("New Supplier was not added successfully");
     });
     setUsers(users.filter((user) => user._id !== userId));
 
@@ -142,7 +142,7 @@ const initialValues = {
       toast.success("New Supplier added successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier added unsuccessfully");
+      toast.error("New Supplier was not added successfully");
     });
 
 
@@ -204,8 +204,8 @@ const initialValues = {
         <thead>
           <tr>
             <th>Supplier Name</th>
-            <th>Contact No</th>
-            <th colSpan={3}>Email</th>
+            <th>Email</th>
+            <th colSpan={3}>Contact No</th>
           </tr>
         </thead>
         <tbody>
