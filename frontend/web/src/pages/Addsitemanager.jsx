@@ -29,6 +29,7 @@ function Addsitemanager() {
     password:'',
   };
   const [users, setUsers] = useState([]);
+  const [site,setsite]=useState('');
   const [editableUserId, setEditableUserId] = useState(null);
   const [editedName, setEditedName] = useState('');
   const [editedEmail, setEditedEmail] = useState('');
@@ -141,6 +142,16 @@ function Addsitemanager() {
     setEditableUserId(null);
   };
 
+  useEffect(() => {
+    function getsitemanager() {
+      axios.get("http://localhost:8070/site/").then((res) => {
+        // console.log(res.data);
+        setsite(res.data);
+        // console.log(orders[1]);
+      });
+    }
+    getsitemanager();
+  }, []);
 
 
   return (
@@ -200,6 +211,7 @@ function Addsitemanager() {
         </thead>
         <tbody>
           {users.map((user) => (
+            <>
             <tr key={user._id}>
               <td>
                 {editableUserId === user._id ? (
@@ -234,6 +246,29 @@ function Addsitemanager() {
                 <button onClick={() => onDelete(user._id)}><FiTrash2 size={20}/></button>
               </td>
             </tr>
+            <tr>
+
+              <td>
+              {site.filter((val) => {
+              if (
+                val.managerId.includes(user._id)
+              ) {
+                return val;
+              }
+            }).map ((items, index2) => (
+            
+              <>
+              {items.name}
+              </>
+            
+            
+            ))}
+
+              </td>
+            </tr>
+
+            </>
+            
           ))}
         </tbody>
       </table>
