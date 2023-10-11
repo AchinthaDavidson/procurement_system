@@ -17,6 +17,10 @@ function Addsite() {
         budget:''
 
     };
+    const [users, setUsers] = useState([]);
+  const [editableUserId, setEditableUserId] = useState(null);
+  const [editedName, setEditedName] = useState('');
+  const [editedbudget, setEditedbudget] = useState('');
 
     useEffect(() => {
         function getsitemanager() {
@@ -47,6 +51,64 @@ function Addsite() {
         resetForm();
        
     };
+
+    useEffect(() => {
+        function getsitemanager() {
+          axios.get("http://localhost:8070/site/").then((res) => {
+            // console.log(res.data);
+            setUsers(res.data);
+            // console.log(orders[1]);
+          });
+        }
+        getsitemanager();
+      }, []);
+    
+    
+     
+    
+      const onDelete = (userId) => {
+    
+        axios
+        .delete(`http://localhost:8070/sitemanager/delete/${userId}`)
+        .then(() => {
+          toast.success("New Supplier added successfully");
+        })
+        .catch((err) => {
+          toast.error("New Supplier added unsuccessfully");
+        });
+        setUsers(users.filter((user) => user._id !== userId));
+      };
+    
+    
+      const handleEdit = (user) => {
+        setEditableUserId(user._id);
+        setEditedName(user.name);
+        setEditedbudget(user.budget);
+        
+      };
+    
+      const handleSave = (user) => {
+        // Implement save functionality here
+        // console.log(`Save user: ${user._id}, Name: ${editedName}, Email: ${editedEmail}`);
+    
+        const values={
+          name:editedName,
+          budget:editedbudget
+        }
+        axios
+        .put(`http://localhost:8070/sitemanager/update/${user._id}`, values)
+        .then(() => {
+          toast.success("New Supplier added successfully");
+        })
+        .catch((err) => {
+          toast.error("New Supplier added unsuccessfully");
+        });
+    
+    
+        setEditableUserId(null);
+      };
+
+
 
   
     const validationSchema = Yup.object().shape({
@@ -114,6 +176,66 @@ function Addsite() {
                         </Form>
                     )}
                 </Formik>
+                <div className={styles.container}>
+      <table className={styles.table}>
+        <thead>
+          <tr>
+            <th>company</th>
+            <th>location</th>
+            <th>site manager</th>
+            <th>Budget</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => (
+            <tr key={user._id}>
+              <td>
+                {user.name}
+              </td>
+              <td>
+                {user.location}
+              </td>
+              <td>
+              {/* {editableUserId === user._id ? (
+                  <input
+                    type="text"
+                    value={editedEmail}
+                    onChange={(e) => setEditedEmail(e.target.value)}
+                  />
+                ) : (
+                  user.email
+                )} */}
+
+              </td>
+
+              <td>
+              {editableUserId === user._id ? (
+                  <input
+                    type="text"
+                    value={editedbudget}
+                    onChange={(e) => setEditedbudget(e.target.value)}
+                  />
+                ) : (
+                  user.budget
+                )}
+              </td>
+              <td>
+                {editableUserId === user._id ? (
+                  <button onClick={() => handleSave(user)}>Save</button>
+                ) : (
+                  <button onClick={() => handleEdit(user)}>Edit</button>
+                )}
+              </td>
+              <td>
+                <button onClick={() => onDelete(user._id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
             </div>
         </div>
     );

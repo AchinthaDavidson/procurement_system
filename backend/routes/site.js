@@ -43,4 +43,28 @@ router.route("/:userId").get((req,res)=>{
     })
   })
 
+  /* update */
+router.route("/update/:id").put(async(req,res)=>{
+
+    let Id = req.params.id;
+  
+    
+  
+   
+   
+    const managerId=req.body.siteManagerName
+    const budget=req.body.budget
+
+  
+    const updatemanager = {managerId,budget};  
+  console.log(updatemanager)
+    await site.updateOne({_id:Id},{$set:updatemanager})
+    .then(()=>{
+        res.status(200).send({status:"manager updated"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"manager update failed", error:err});
+    })
+  })
+
 module.exports=router;
