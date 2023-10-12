@@ -72,7 +72,7 @@ function Order() {
   const handleAddClick = (selectedOption, numberValue,id,index) => {
     // Create a new item with selectedOption and numberValue
     const newItem = { company: selectedOption, qty: numberValue,id:id };
-
+   alert(selectedOption)
     // Update the addedData state with the new item
     setAddedData([...addedData, newItem]);
     document.getElementById(index).hidden=false
@@ -177,7 +177,7 @@ function Order() {
 
                                 }).map((supplier, index) => (
                                   <>
-                                    <option className={styles.dropdown} value={supplier._id}>Supplier:{supplier.company} | Item:{product.name} | Unit Price: {product.qty}</option>
+                                    <option className={styles.dropdown} value={supplier._id}>Supplier:{supplier.company} | Item:{product.name} | Unit Price: {product.price}</option>
                                   </>
                                 ))
                                 }
@@ -236,6 +236,9 @@ function Order() {
                     <td className={styles.placeordertr}> <button className={styles.sendorder} 
                             onClick={() => handlesubmit()}
                           >Place order</button></td>
+                          <td>
+                            {items.budget}
+                          </td>
                   </tr>
 
                 </table>

@@ -20,6 +20,9 @@ const orderSchema=new Schema({
         type: String,
 
     },
+    date:{
+        type:Date
+    }
    
     
 })

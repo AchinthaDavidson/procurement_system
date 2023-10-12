@@ -18,6 +18,7 @@ router.route("/add").post(validate([
         price,
         supplier_id,
     })
+    console.log(newproduct)
   
     newproduct.save().then(()=>{
         res.json("save details")

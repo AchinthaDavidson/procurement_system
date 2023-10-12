@@ -10,7 +10,8 @@ router.route("/add").post(validate([
     const item = req.body.item
     const qty = req.body.qty
     const siteid = req.body.siteid
-    const status = req.body.status
+    const status = "order_requerested"
+    const date =new Date().toISOString();
 
 
 
@@ -19,6 +20,7 @@ router.route("/add").post(validate([
         qty,
         siteid,
         status,
+        date
     })
 
     newproduct.save().then(() => {
@@ -29,7 +31,7 @@ router.route("/add").post(validate([
 })
 
 router.route("/").get((req,res)=>{
-    order.find().then((orders)=>{
+    order.find({},{}).then((orders)=>{
         res.json(orders)
     }).catch((err)=>{
         console.log(err)

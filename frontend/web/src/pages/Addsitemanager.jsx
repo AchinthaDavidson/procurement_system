@@ -249,9 +249,9 @@ function Addsitemanager() {
               </td>
             </tr>
             <tr><td colSpan={4} style={{background:'rgba(53, 39, 68, 0.742)',color:'white'}}>Site</td></tr>
-            <tr>
             
-              <td >
+            
+              
               {site.filter((val) => {
               if (
                 val.managerId.includes(user._id)
@@ -259,16 +259,19 @@ function Addsitemanager() {
                 return val;
               }
             }).map ((items, index2) => (
-            
-              <>
-              {items.name}
-              </>
+
+              <tr>
+                <td>
+                {items.name}  
+                </td>
+              </tr>
+              
             
             
             ))}
 
-              </td>
-            </tr>
+              
+          
 
             </>
             

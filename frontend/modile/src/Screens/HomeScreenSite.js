@@ -43,7 +43,7 @@ const HomeScreen = ({ navigation }) => {
             try {
               const response = await axios.get(`${PORT}site/${userId}`);
               setsite(response.data);
-              console.log(site[1]);
+              // console.log(site[1]);
             } catch (error) {
               // console.error('Error fetching data:', error);
             }

@@ -18,7 +18,7 @@ const AuthScreen = () => {
 
   async function login(data) {
     
-      
+      // console.log(PORT)
       await axios.post(""+PORT+"supplier/login", data)
       .then((response) => {
         navigation.navigate('SupplierHome');

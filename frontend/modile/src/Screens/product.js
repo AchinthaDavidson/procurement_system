@@ -38,7 +38,7 @@ const Product = () => {
       
       })
       .catch((error) => {
-        // console.error('An error occurred:', error);
+        console.error('An error occurred:', error);
         alert('An error occurred while authenticating. Please try again.');
       });
 

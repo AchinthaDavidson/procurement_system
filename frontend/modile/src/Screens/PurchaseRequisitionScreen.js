@@ -103,7 +103,7 @@ const PurchaseRequisitionScreen  = () => {
         siteid:site,
         status:"pending"
       };
-
+console.log(data)
       await axios.post(""+PORT+"order/add/", data)
       .then((response) => {
        

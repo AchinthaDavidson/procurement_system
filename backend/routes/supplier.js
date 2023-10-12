@@ -43,7 +43,7 @@ router.route("/login").post(validate([
   
     const email =req.body.email
     const password =req.body.password
- 
+    console.log(email)
     try {
         const supplier = await Supplier.findOne({ email });
        

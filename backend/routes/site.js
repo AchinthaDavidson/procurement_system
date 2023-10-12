@@ -28,7 +28,7 @@ router.route("/add").post(async (req,res)=>{
 router.route("/:userId").get((req,res)=>{
     site .find({managerId:req.params.userId}).then((site )=>{
         res.json(site )
-        console.log(site)
+        // console.log(site)
     }).catch((err)=>{
         console.log(err)
     })
@@ -37,7 +37,7 @@ router.route("/:userId").get((req,res)=>{
   router.route("/").get((req,res)=>{
     site .find().then((site )=>{
         res.json(site )
-        console.log(site)
+        // console.log(site)
     }).catch((err)=>{
         console.log(err)
     })
