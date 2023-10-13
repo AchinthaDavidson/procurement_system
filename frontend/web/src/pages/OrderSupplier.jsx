@@ -11,6 +11,7 @@ function Ordersupplier() {
   const [order, setorder] = useState([]);
   const [supplier, setsupplier] = useState([]);
   const [product, setproduct] = useState([]);
+  var orderData = null
 
   useEffect(() => {
     function getItems() {
@@ -84,13 +85,21 @@ function Ordersupplier() {
                   <td>{orders.qty}</td>
                   
                   <td>
-                    {supplier.filter((val)=>{
-                      if (val._id.includes(order.supplierid)){
-                        return val
+                    {
+                    supplier.filter((val)=>{
+                      var order = orders.supplierid
+                      order.forEach(element => {
+                        
+                         if (val._id.includes(element.company)){
+                          return val
                       }
+                      })
+                      return val
+                   
                     }).map((supplier,index)=>(
                       <>
                       {supplier.company}
+                      hjj
                       </>
                     ))}
 

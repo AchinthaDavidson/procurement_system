@@ -61,6 +61,7 @@ function Order() {
 
   const handleSelectChange = (event) => {
     setSelectedOption(event.target.value);
+    alert(event.target.value)
   };
 
 
@@ -163,6 +164,7 @@ function Order() {
                         <td>{items.qty}</td>
                         <td>
                           <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
+                            <option value="" disabled> select supplier</option>
                             {product.filter((val) => {
                               if (val.name.includes(items.item)) {
                                 return val;
@@ -190,7 +192,7 @@ function Order() {
 
                         </td>
                         <td>
-                          <input type="number" min="0" max={items.qty} id="numberInput"  onChange={handleInputChange} />
+                          <input type="number" min="0"  max={parseInt(items.qty, 10)}  id="numberInput"  onChange={handleInputChange} />
                         </td>
                         <td>
                           <button className={styles.addbtn}
