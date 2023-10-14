@@ -17,27 +17,27 @@ const AuthScreen = () => {
   };
 
   async function login(data) {
-    
+    navigation.navigate('SiteHome');
       // console.log(PORT)
-      await axios.post(""+PORT+"supplier/login", data)
-      .then((response) => {
-        navigation.navigate('SupplierHome');
-      //  console.log(response.data.message)
-       AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
-      })
-      .catch(() => {
-         axios.post(""+PORT+"sitemanager/login", data)
-        .then((response) => {
-          navigation.navigate('SiteHome');
-        //  console.log(response.data.message)
-         AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
-        })
-        .catch((error) => {
-          // console.error('An error occurred:', error);
+      // await axios.post(""+PORT+"supplier/login", data)
+      // .then((response) => {
+      //   navigation.navigate('SupplierHome');
+      // //  console.log(response.data.message)
+      //  AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
+      // })
+      // .catch(() => {
+      //    axios.post(""+PORT+"sitemanager/login", data)
+      //   .then((response) => {
+      //     navigation.navigate('SiteHome');
+      //   //  console.log(response.data.message)
+      //    AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
+      //   })
+      //   .catch((error) => {
+      //     // console.error('An error occurred:', error);
           
-          alert('An error occurred while authenticating. Please try again.');
-        });
-      });
+      //     alert('An error occurred while authenticating. Please try again.');
+      //   });
+      // });
       
    
   }

@@ -30,7 +30,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Dashboard</Text>
+        <Text style={styles.title}>D a s h b o a r d</Text>
         <TouchableOpacity onPress={toggleModal}>
           <Image
             source={require('../../assets/profile.png')} // Replace with the actual path to your image
@@ -52,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
          
-            <Text style={styles.modalTitle}>Select an Option:</Text>
+         
             <Button title="Logout" onPress={() => {navigation.navigate('Auth'); }}/>
           </View>
         </View>
@@ -68,6 +68,11 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigateToScreen('PurchaseRequisition')}
       >
         <Text style={styles.cardTitle}>Invoice</Text>
+        <Image
+        source={require('../../assets/invoice.png')} // Replace with the actual path to your image
+          style={styles.imageinv}
+        />
+
       </TouchableOpacity>
 
       {/* Card 2 - Purchase Order Form */}
@@ -76,6 +81,22 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigateToScreen('Product')}
       >
         <Text style={styles.cardTitle}>Product</Text>
+        <Image
+        source={require('../../assets/product.png')} // Replace with the actual path to your image
+          style={styles.imageinv}
+        />
+      </TouchableOpacity>
+
+      {/* Card 3 - Chat */}
+      <TouchableOpacity
+        style={styles.card}
+        onPress={() => navigateToScreen('Chat')}
+      >
+        <Text style={styles.cardTitle}>Chat</Text>
+        <Image
+        source={require('../../assets/chat.png')} // Replace with the actual path to your image
+          style={styles.imageinv}
+        />
       </TouchableOpacity>
 
      
@@ -88,7 +109,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#4c0080',
   },
   header: {
     flexDirection: 'row',
@@ -100,12 +121,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '800',
+    color: "yellow",
+    marginLeft: '25%'
   },
   image1: {
     width: '100%',
     height: '20%',
     // resizeMode: 'contain',
+  },
+  imageinv: {
+    width: '15%',
+    height: '30%',
+    marginTop: '5%'
   },
   image: {
     width: 40,
@@ -122,6 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end', // Vertical alignment: 'center', 'flex-start', or 'flex-end'
     },
   cardContainer: {
+    marginTop: '10%',
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -129,18 +158,20 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   card: {
-    width: '90%',
-
+    width: '80%',
+    height: '50%',
     aspectRatio: 2,
     backgroundColor: 'lightgray',
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
+    backgroundColor: '#c266ff'
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
+    color: 'white'
   },
   modalContainer: {
     flex: 1,
@@ -162,6 +193,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
+  
+
 });
 
 export default HomeScreen;
