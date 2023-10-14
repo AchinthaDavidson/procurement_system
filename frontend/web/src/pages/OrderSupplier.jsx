@@ -3,7 +3,7 @@ import axios from "axios";
 import Niv from '../components/Niv';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styles from '../Style/order.module.css';
+import styles from '../Style/ordersup.module.css';
 
 function Ordersupplier() {
 
@@ -58,18 +58,18 @@ function Ordersupplier() {
     <div>
       <Niv name='Order From Suppliers' />
       <div className="data">
-        <table border="1">
+        <table className={styles.table} border="1">
         {site.map ((items, index2) => (
             <>
-            <tr>
-              <td >{items.name}</td>
+            <tr className={styles.siterow}>
+              <th colSpan={5}>Site: {items.name}</th>
             </tr>
-            <tr>
-              <td>date</td>
-              <td>item</td>
-              <td>qty</td>
-              <td>supplier</td>
-              <td>status</td>
+            <tr className={styles.tablecols}>
+              <td>Date</td>
+              <td>Item</td>
+              <td>Required quantity</td>
+              <td>Quantity ordered by each supplier</td>
+              <td>Status</td>
             </tr>
            
               {
@@ -88,18 +88,26 @@ function Ordersupplier() {
                     {
                     supplier.filter((val)=>{
                       var order = orders.supplierid
+                     
                       order.forEach(element => {
                         
+                        {/* console.log(element) */}
                          if (val._id.includes(element.company)){
-                          return val
+                          
+                         var val1={
+                            company: val.company,
+                            qty: element.qty
+                          }
+                          console.log(val1)
+                          return val1
                       }
                       })
+                      console.log(val)
                       return val
                    
                     }).map((supplier,index)=>(
                       <>
-                      {supplier.company}
-                      hjj
+                      {supplier.company} - {orders.supplierid[index].qty}<br/>
                       </>
                     ))}
 

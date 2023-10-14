@@ -72,7 +72,9 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Dashboard</Text>
+        <Text style={styles.title}>D a s h b o a r d</Text>
+
+        {/* <Text style={styles.name}>{"\n"}SITE MANAGER</Text> */}
         <TouchableOpacity onPress={toggleModal}>
           <Image
             source={require('../../assets/profile.png')} // Replace with the actual path to your image
@@ -97,7 +99,7 @@ const HomeScreen = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
          
-            <Text style={styles.modalTitle}>Select an Option:</Text>
+           
             <Button title="Logout" onPress={() => {navigation.navigate('Auth'); }}/>
           </View>
         </View>
@@ -128,6 +130,7 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigateToScreen('PurchaseRequisition')}
       >
         <Text style={styles.cardTitle}>Purchase Requisition Form</Text>
+        <Image source={require('../../assets/formicon.png')} style={styles.btnform}/>
       </TouchableOpacity>
 
       {/* Card 2 - Purchase Order Form */}
@@ -136,6 +139,7 @@ const HomeScreen = ({ navigation }) => {
         onPress={() => navigateToScreen('Order')}
       >
         <Text style={styles.cardTitle}>Order</Text>
+        <Image source={require('../../assets/ordericon.png')} style={styles.btnform}/>
       </TouchableOpacity>
 
      
@@ -148,7 +152,7 @@ const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#4c0080',
   },
   header: {
     flexDirection: 'row',
@@ -161,7 +165,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginLeft: '30%',
+    color: "yellow",
   },
+  
   image1: {
     width: '100%',
     height: '20%',
@@ -187,6 +194,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     padding: 20,
+
   },
   card: {
     width: '90%',
@@ -197,10 +205,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginVertical: 10,
+    backgroundColor: '#c266ff'
+
   },
   cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: 'white'
+
+  },
+  btnform: {
+    width: '15%',
+    height: '35%',
+    marginTop: '5%'
   },
   modalContainer: {
     flex: 1,
@@ -211,7 +228,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '45%',
-    backgroundColor: 'white',
+    backgroundColor: '#4c0080',
     padding: 20,
     
     // borderRadius: 10,
@@ -226,6 +243,8 @@ const styles = StyleSheet.create({
     textAlign:'center',
     fontSize: 20,
     marginBottom: 10,
+    color: "white",
+    marginTop: '10%'
   },
   picker: {
     alignSelf:'center',
