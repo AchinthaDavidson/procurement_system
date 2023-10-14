@@ -15,7 +15,10 @@ function Order() {
   const [selectedOption, setSelectedOption] = useState('');
   const [numberValue, setNumberValue] = useState(0);
   const [addedData, setAddedData] = useState([]);
-
+  const [addedsupplier, setaddsupplier] = useState([])
+  const [selectedOptionObject,setselectedOptionObject]=useState([])
+  const [budget,setbudget]=useState(0)
+  const [count,setcount]=useState(0)
   useEffect(() => {
     function getItems() {
       axios.get("http://localhost:8070/site/").then((res) => {
@@ -60,8 +63,11 @@ function Order() {
 
 
   const handleSelectChange = (event) => {
-    setSelectedOption(event.target.value);
-    alert(event.target.value)
+    setSelectedOption(event.target.value)
+    const selectedOptionValue = event.target.value;
+    setselectedOptionObject(JSON.parse(selectedOptionValue))
+
+  
   };
 
 
@@ -70,50 +76,77 @@ function Order() {
     setNumberValue(value); // Update the state with the numeric value
   };
 
-  const handleAddClick = (selectedOption, numberValue,id,index) => {
-    // Create a new item with selectedOption and numberValue
-    const newItem = { company: selectedOption, qty: numberValue,id:id };
-   alert(selectedOption)
+  const handleAddClick = (selectedOption, numberValue, id, index) => {
+    
+    const newItem = { company: selectedOptionObject.supplier, qty: numberValue, id: id, companyId: selectedOptionObject.supplier_id,itemprice:selectedOptionObject.price,index:count};
+    console.log(newItem)
+    setcount(count+1)
     // Update the addedData state with the new item
     setAddedData([...addedData, newItem]);
-    document.getElementById(index).hidden=false
-    
+    document.getElementById(index).hidden = false
+console.log(addedData)
+    // console.log(newItem.itemprice*Number(numberValue))
+    setbudget(budget+(newItem.itemprice*Number(numberValue)))
     setSelectedOption("")
     setNumberValue("")
+    setaddsupplier([])
   };
 
-   const handlesubmit= ()=>{
- 
-    {addedData.map((item, index) => (
-      addsupplier(item)
-      ))}
-   }
+  const handlesubmit = (budget,id) => {
 
-   const addsupplier=(item)=>{
-    
-    var data = {
-      company:item.company,
-      qty:item.qty
+    {
+      addedData.map((item, index) => (
+        addsupplier(item)
+      ))
     }
 
-    const data1={data}
-
-
- const link ="http://localhost:8070/order/update/"+item.id;
-
+    const values={
+      
+      budget:budget
+    }
     axios
-    .put(link,data1 )
+    .put(`http://localhost:8070/site/update/${id}`, values)
     .then(() => {
       toast.success("New Supplier added successfully");
     })
     .catch((err) => {
       toast.error("New Supplier added unsuccessfully");
     });
-   }
+
+    setAddedData([])
+  }
+
+  const addsupplier = (item) => {
+
+    var data = {
+      company: item.companyId,
+      qty: item.qty
+    }
+
+    const data1 = { data }
+
+
+    const link = "http://localhost:8070/order/update/" + item.id;
+
+    axios
+      .put(link, data1)
+      .then(() => {
+        toast.success("New Supplier added successfully");
+      })
+      .catch((err) => {
+        toast.error("New Supplier added unsuccessfully");
+      });
+  }
+
+  const onDelete = (userId,budget1) => {
+
+    setbudget(budget-budget1)
+    setAddedData(addedData.filter((user) => user.index !== userId));
+  };
 
   return (
     <div>
-       <ToastContainer position="top-right" theme="colored" />
+      <ToastContainer position="top-right" theme="colored" />
       <Niv name='Orders' />
       <div className="data">
 
@@ -126,7 +159,7 @@ function Order() {
         </div>
         <div className={styles.table1}>
 
-          <table  className={styles.outertable}>
+          <table className={styles.outertable}>
             {site.filter((val) => {
               if (searchTerm === "") {
                 return val;
@@ -135,14 +168,14 @@ function Order() {
               ) {
                 return val;
               }
-            }).map ((items, index2) => (
+            }).map((items, index2) => (
               <>
                 <tr >
                   <th>Site: {items.name}</th>
 
                 </tr>
 
-                <table className={styles.innertable} border="1"> 
+                <table className={styles.innertable} border="1">
                   <tr className={styles.tabattributes}>
                     <td>Item</td>
                     <td>Quantity Required</td>
@@ -163,47 +196,52 @@ function Order() {
                         <td>{items.item}</td>
                         <td>{items.qty}</td>
                         <td>
-                          <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
-                            <option value="" disabled> select supplier</option>
-                            {product.filter((val) => {
-                              if (val.name.includes(items.item)) {
-                                return val;
-                              }
+                        <select id="dropdown" value={selectedOption} onChange={handleSelectChange}>
+      <option value="" disabled> Select supplier</option>
+      {product
+        .filter((val) => val.name.includes(items.item))
+        .map((product) => {
+          const associatedSupplier = supplier.find((val) => val._id === product.supplier_id);
+          if (associatedSupplier) {
 
-                            }).map((product, index) => (
-                              <>
-                                {supplier.filter((val) => {
-                                  if (val._id.includes(product.supplier_id)) {
-                                    return val;
-                                  }
-
-                                }).map((supplier, index) => (
-                                  <>
-                                    <option className={styles.dropdown} value={supplier._id}>Supplier:{supplier.company} | Item:{product.name} | Unit Price: {product.price}</option>
-                                  </>
-                                ))
-                                }
-
-                              </>
-                            ))
-                            }
-
-                          </select>
+            
+            const optionValue = `${product.price} - ${associatedSupplier.company}`;
+            const optionObject = {
+              value: optionValue,
+              supplier: associatedSupplier.company,
+              item: product.name,
+              price: product.price,
+              supplier_id:associatedSupplier._id
+            };
+            return (
+              <option
+                // key={product._id} // Provide a unique key for each option
+                className={styles.dropdown}
+                value={JSON.stringify(optionObject)}
+              >
+                Supplier: {associatedSupplier.company} | Item: {product.name} | Unit Price: {product.price}
+              </option>
+            );
+          }
+          return null; // Return null if no matching supplier is found
+        })
+      }
+    </select>
 
                         </td>
                         <td>
-                          <input type="number" min="0"  max={parseInt(items.qty, 10)}  id="numberInput"  onChange={handleInputChange} />
+                          <input type="number" min="0" max={parseInt(items.qty, 10)} id="numberInput" onChange={handleInputChange} />
                         </td>
                         <td>
                           <button className={styles.addbtn}
-                            onClick={() => handleAddClick(selectedOption, numberValue,items._id,index1)}
+                            onClick={() => handleAddClick(selectedOption, numberValue, items._id, index1)}
                           >
                             ADD
                           </button>
                         </td>
                       </tr>
                       <tr>
-                        <td colSpan={5}  id={index1} hidden>
+                        <td colSpan={5} id={index1} hidden>
 
                           <table id="new">
                             <tr>
@@ -220,7 +258,9 @@ function Order() {
                               <tr key={index}>
                                 <td>{item.company}</td>
                                 <td>{item.qty}</td>
-                                
+                                <td>{item.itemprice*Number(item.qty)}</td>
+                                <td><button onClick={() => onDelete(item.index,item.itemprice*Number(item.qty))} >delete</button></td>
+
                               </tr>
                             ))}
 
@@ -235,19 +275,19 @@ function Order() {
                   ))}
 
                   <tr colSpan="5" >
-                    <td className={styles.placeordertr}> <button className={styles.sendorder} 
-                            onClick={() => handlesubmit()}
-                          >Place order</button></td>
-                          <td>
-                            {items.budget}
-                          </td>
+                    <td className={styles.placeordertr}> <button className={styles.sendorder}
+                      onClick={() => handlesubmit(items.budget-budget,items._id)}
+                    >Place order</button></td>
+                    <td>
+                      {items.budget-budget}
+                    </td>
                   </tr>
 
                 </table>
 
               </>
             ))}
-           
+
           </table>
 
         </div>

@@ -38,16 +38,26 @@ router.route("/").get((req,res)=>{
     })
 })
 
+router.route("/get").get((req,res)=>{
+    order.find({status:"order_requerested"}).then((orders)=>{
+        res.json(orders)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
 /* update */
 router.route("/update/:id").put(async(req,res)=>{
 
     let Id = req.params.id;
 
     const supplierid  = req.body.data;
-console.log(req.body.data);
+    const status = "processing"
+// console.log(req.body.data);
     const updateorder = {supplierid};  
+    const updateorder1 = {status};  
 
-    await order.updateOne({_id:Id},{$push:updateorder})
+    await order.updateOne({_id:Id},{$push:updateorder}) && order.updateOne({_id:Id},{$set:updateorder1})
     .then(()=>{
         res.status(200).send({status:"categories updated"})
     }).catch((err)=>{
