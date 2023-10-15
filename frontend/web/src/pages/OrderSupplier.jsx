@@ -83,7 +83,7 @@ function Ordersupplier() {
                   <td>{orders.date}</td>
                   <td>{orders.item}</td>
                   <td>{orders.qty}</td>
-                  
+                  {/* {orders.supplierid[index].qty} */}
                   <td>
                     {
                     supplier.filter((val)=>{
@@ -107,7 +107,7 @@ function Ordersupplier() {
                    
                     }).map((supplier,index)=>(
                       <>
-                      {supplier.company} - {orders.supplierid[index].qty}<br/>
+                      {supplier.company} <br/>
                       </>
                     ))}
 

@@ -3,7 +3,7 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-nativ
 import { useNavigation } from '@react-navigation/native'; // Import the navigation hook
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {PORT } from '@env';
+// import {PORT } from '@env';
 
 const AuthScreen = () => {
   const navigation = useNavigation(); // Access the navigation prop
@@ -11,33 +11,36 @@ const AuthScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+const PORT="http://192.168.8.114:8070/"
 
   const toggleAuthType = () => {
     setIsLogin(!isLogin);
   };
 
   async function login(data) {
-    navigation.navigate('SiteHome');
-      // console.log(PORT)
-      // await axios.post(""+PORT+"supplier/login", data)
-      // .then((response) => {
-      //   navigation.navigate('SupplierHome');
-      // //  console.log(response.data.message)
-      //  AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
-      // })
-      // .catch(() => {
-      //    axios.post(""+PORT+"sitemanager/login", data)
-      //   .then((response) => {
-      //     navigation.navigate('SiteHome');
-      //   //  console.log(response.data.message)
-      //    AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
-      //   })
-      //   .catch((error) => {
-      //     // console.error('An error occurred:', error);
+    // navigation.navigate(PORT);
+    // http://192.168.112.181:8070
+      console.log(PORT)
+      // navigation.navigate('SiteHome');
+      await axios.post(`${PORT}supplier/login`, data)
+      .then((response) => {
+        navigation.navigate('SupplierHome');
+       console.log(response.data.message)
+       AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
+      })
+      .catch(() => {
+         axios.post(""+PORT+"sitemanager/login", data)
+        .then((response) => {
+          navigation.navigate('SiteHome');
+        //  console.log(response.data.message)
+         AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
+        })
+        .catch((error) => {
+          // console.error('An error occurred:', error);
           
-      //     alert('An error occurred while authenticating. Please try again.');
-      //   });
-      // });
+          alert('An error occurred while authenticating. Please try again.');
+        });
+      });
       
    
   }

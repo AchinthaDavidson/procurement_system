@@ -7,11 +7,12 @@ const {  validate } = require("../utils/validator");
 router.route("/add").post(validate([
     body("qty").isNumeric(),
 ]), async (req, res) => {
+    const d=new Date();
     const item = req.body.item
     const qty = req.body.qty
     const siteid = req.body.siteid
     const status = "order_requerested"
-    const date =new Date().toISOString();
+    const date =new Date().toUTCString();
 
 
 
@@ -40,6 +41,23 @@ router.route("/").get((req,res)=>{
 
 router.route("/get").get((req,res)=>{
     order.find({status:"order_requerested"}).then((orders)=>{
+        res.json(orders)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+router.route("/processing").get((req,res)=>{
+    order.find({status:"processing"}).then((orders)=>{
+        res.json(orders)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
+router.route("/display/:id").get((req,res)=>{
+    let Id = req.params.id;
+    order.find({siteid:Id}).then((orders)=>{
         res.json(orders)
     }).catch((err)=>{
         console.log(err)

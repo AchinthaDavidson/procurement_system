@@ -1,124 +1,113 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Modal, TouchableOpacity, FlatList } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet,ScrollView } from 'react-native';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {PORT } from '@env';
+// import {PORT } from '@env';
 
 
 const OrderScreen = () => {
  
-  const [quantity, setQuantity] = useState('');
-  const [searchText, setSearchText] = useState('');
-  const [filteredData, setFilteredData] = useState(data);
+  const [data, setdata1] = useState([]);
+  const [site, setsite] = useState("");
+  const PORT="http://192.168.8.114:8070/"
+  // const data = [
+  //   { date: '2023-10-14', item: 'Sample Item 1', qty: 10, status: 'Shipped' },
+  //   { date: '2023-10-15', item: 'Sample Item 2', qty: 5, status: 'Pending' },
+  //   // Add more data objects as needed
+  // ];
 
-  const handleSearch = (text) => {
-    setSearchText(text);
-    const filtered = data.filter((item) =>
-      item.label.toLowerCase().includes(text.toLowerCase())
-    );
-    setFilteredData(filtered);
-  };
+  function getuserdata(){
+    AsyncStorage.getItem('siteData')
+    .then(data => {
+      if (data !== null) {
+        const siteData = JSON.parse(data);
+       setsite(siteData._id)
+       console.log(site)
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        onSelect(item.value);
-        setSearchText(item.label);
-        setFilteredData(data);
-      }}
-    >
-      <Text>{item.label}</Text>
-    </TouchableOpacity>
-  );
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  
+  }
+  getuserdata()
 
-  const handleOrderSubmit = () => {
-    // Handle the order submission here, including selectedItem and quantity
-  };
+ 
+    // Define an async function
+    async function fetchSiteManager() {
+      try {
+        const response = await axios.get(""+PORT+"order/display/"+site);
+        setdata1(response.data);
+      console.log("hi"+response.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
+
+   
+    useEffect(() => {
+      fetchSiteManager();
+    },[getuserdata]);
+  // }, []);
+
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Purchase Requisition Form</Text>
-      <Text style={styles.label}>Select an item:</Text>
-      <View>
-      <TextInput
-        placeholder="Select an item"
-        value={selectedItem ? selectedItem.name : ''}
-        onFocus={() => setModalVisible(true)}
-      />
-      <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType="fade"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View>
-          <FlatList
-            data={data}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => handleDropdownSelect(item)}
-              >
-                <Text>{item.name}</Text>
-              </TouchableOpacity>
-            )}
-          />
-          <TouchableOpacity
-            onPress={() => setModalVisible(false)}
-          >
-            <Text>Close</Text>
-          </TouchableOpacity>
+    <ScrollView>
+    <View style={styles.table}>
+      <View style={styles.tableHeader}>
+        <Text style={styles.headerCell}>Date</Text>
+        <Text style={styles.headerCell}>Item</Text>
+        <Text style={styles.headerCell}>Qty</Text>
+        <Text style={styles.headerCell}>Status</Text>
+      </View>
+      {data.map((row, index) => (
+        <View style={styles.tableRow} key={index}>
+          <Text style={styles.cell}>{row.date}</Text>
+          <Text style={styles.cell}>{row.item}</Text>
+          <Text style={styles.cell}>{row.qty}</Text>
+          <Text style={styles.cell}>{row.status}</Text>
         </View>
-      </Modal>
+      ))}
     </View>
-      
-
-
-
-      <Text style={styles.label}>Quantity:</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter quantity"
-        keyboardType="numeric"
-        value={quantity}
-        onChangeText={(text) => setQuantity(text)}
-      />
-
-      <Button
-        title="Submit Order"
-        onPress={handleOrderSubmit}
-        style={styles.button}
-      />
-    </View>
+    </ScrollView>
+    
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  form: {
-    flex: 1,
-  },
-  label: {
-    fontSize: 18,
-    marginBottom: 5,
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
+  table: {
     borderWidth: 1,
-    marginBottom: 15,
-    paddingLeft: 10,
+    borderColor: '#000',
+    margin: 10,
+    flexDirection: 'column',
+  },
+  tableHeader: {
+    flexDirection: 'row',
+    backgroundColor: '#333',
+    justifyContent: 'space-between',
+  },
+  tableRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  headerCell: {
+    flex: 1,
+    color: '#fff',
+    padding: 10,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  cell: {
+    flex: 1,
+    padding: 10,
+    textAlign: 'center',
   },
 });
+
+
 
 export default OrderScreen;

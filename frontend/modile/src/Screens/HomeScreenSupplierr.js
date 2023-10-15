@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Option 1'); // Initial selected option
-
+  const PORT="http://192.168.8.114:8070/"
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
   };
@@ -65,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
        {/* Card 1 - Purchase Requisition Form */}
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigateToScreen('PurchaseRequisition')}
+        onPress={() => navigateToScreen('Invoice')}
       >
         <Text style={styles.cardTitle}>Invoice</Text>
         <Image

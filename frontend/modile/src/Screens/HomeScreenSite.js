@@ -3,14 +3,15 @@ import { View, Text, Button, Image, StyleSheet, TouchableOpacity, Modal } from '
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Picker} from "@react-native-picker/picker"
-import {PORT } from '@env';
+// import {PORT } from '@env';
 
 const HomeScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState([]);
   const [site, setsite] = useState([]);
   const [userId,setId]=useState("");  
-
+  const PORT="http://192.168.8.114:8070/"
+  
   function getuserdata(){
     AsyncStorage.getItem('userData')
     .then(data => {
@@ -43,7 +44,7 @@ const HomeScreen = ({ navigation }) => {
             try {
               const response = await axios.get(`${PORT}site/${userId}`);
               setsite(response.data);
-              // console.log(site[1]);
+              console.log(site[1]);
             } catch (error) {
               // console.error('Error fetching data:', error);
             }
@@ -51,7 +52,7 @@ const HomeScreen = ({ navigation }) => {
       
           // Call the async function inside useEffect
           fetchSiteManager();
-        }, [userId]);
+        }, [setsite]);
 
   const navigateToScreen = (screenName) => {
     if(selectedItem){

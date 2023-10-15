@@ -42,4 +42,27 @@ router.route("/").get((req,res)=>{
     })
   })
 
+  router.route("/get/:id").get((req,res)=>{
+    let Id = req.params.id;
+
+    product.find({supplier_id:Id}). then((product)=>{
+        res.json(product)
+    }).catch((err)=>{
+        console.log(err)
+    })
+  })
+
+  router.route("/delete/:id").delete(async(req,res)=>{
+    
+  
+
+    await product.deleteOne({_id:req.params.id}).then(()=>{
+        res.status(200).send({status:"order details deleted"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"order details delete failed", error:err});
+    })
+})
+
+
 module.exports=router;

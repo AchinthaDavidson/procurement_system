@@ -4,7 +4,8 @@ import { Button, Input } from 'react-native-elements';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {PORT } from '@env';
+// import {PORT } from '@env';
+// import { green100 } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 // const orderItems = [
 //   {  name: 'Item 1' },
@@ -23,6 +24,8 @@ const PurchaseRequisitionScreen  = () => {
   const [qtyarray, setqtyArray] = useState([]);
   const [site, setsite] = useState("");
   const [orderItems,setorderitems]=useState("")
+  const PORT="http://192.168.8.114:8070/"
+
   function getuserdata(){
     AsyncStorage.getItem('siteData')
     .then(data => {
@@ -38,11 +41,12 @@ const PurchaseRequisitionScreen  = () => {
   }
   getuserdata()
 
+  // console.log(PORT)
   useEffect(() => {
     // Define an async function
     async function fetchproduct() {
       try {
-        const response = await axios.get(`${PORT}product/`);
+        const response = await axios.get(""+PORT+"product/");
         // setorderitems(response.data);
 
         const uniqueNames = new Set();
@@ -58,12 +62,7 @@ const PurchaseRequisitionScreen  = () => {
 
         console.log(filteredData);
         setorderitems(filteredData)
-
-
-
-
-
-      console.log(response.data)
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -71,7 +70,7 @@ const PurchaseRequisitionScreen  = () => {
 
    
     fetchproduct();
-  }, []);
+  }, [setorderitems]);
 
 
   const handleItemSelect = (item) => {
@@ -121,6 +120,7 @@ console.log(data)
     {itemarray.map((item, index) => (
     addorder(item,qtyarray[index])
     ))}
+    setitemArray([])
    
   };
 
@@ -157,6 +157,7 @@ console.log(data)
       />
       <Button
         title="ADD"
+        mode="contained"
         onPress={placeOrder}
         containerStyle={{ marginTop: 20 }}
       />

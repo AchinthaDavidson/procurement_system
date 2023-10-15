@@ -31,7 +31,7 @@ function Order() {
 
   useEffect(() => {
     function getItems() {
-      axios.get("http://localhost:8070/order/").then((res) => {
+      axios.get("http://localhost:8070/order/get").then((res) => {
         setorder(res.data);
 
       });

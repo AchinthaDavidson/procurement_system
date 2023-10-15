@@ -7,7 +7,7 @@ import HomeScreenSupplier from './src/Screens/HomeScreenSupplierr';
 import PurchaseRequisitionScreen from './src/Screens/PurchaseRequisitionScreen'; // Import your Purchase Requisition Form screen component
 import OrderScreen from './src/Screens/OrderScreen'; // Import your Purchase Order Form screen component
 import Product from './src/Screens/product';
-
+import Invoice from './src/Screens/invoice'
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -20,6 +20,7 @@ const App = () => {
         <Stack.Screen name="PurchaseRequisition" component={PurchaseRequisitionScreen} />
         <Stack.Screen name="Order" component={OrderScreen} />
         <Stack.Screen name="Product" component={Product} />
+        <Stack.Screen name="Invoice" component={Invoice} />
        
       </Stack.Navigator>
     </NavigationContainer>
