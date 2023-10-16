@@ -1,45 +1,119 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import React, { useState,useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet,ScrollView } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
-const data = [
-  { id: '1', name: 'Item 1' },
-  { id: '2', name: 'Item 2' },
-  { id: '3', name: 'Item 3' },
-  // Add more data items as needed
-];
+const invoice = () => {
+    const [userId,setId]=useState(""); 
+    const [data, setdata] = useState([]);
+    const PORT="http://172.28.10.131:8070/"
 
-const MyFlatList = () => {
-  const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.itemText}>{item.name}</Text>
-    </View>
-  );
+    async function getuserdata(){
+        await AsyncStorage.getItem('userData')
+         .then(data => {
+           if (data !== null) {
+             const userData = JSON.parse(data);
+            setId(userData._id)
+            // console.log(userData)
+           }
+         })
+         .catch(error => {
+           console.error(error);
+         });
+     
+       }
+       getuserdata()
+       async function fetchSiteManager() {
+        try {
+          const response = await axios.get(""+PORT+"order/processing/"+userId);
+          setdata(response.data);
+        // console.log("hi"+response.data)
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      }
+    
+     
+      useEffect(() => {
+        fetchSiteManager();
+      },[getuserdata]);
 
   return (
-    <FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-      style={styles.container}
-    />
+    <ScrollView>
+    <View style={styles.table}>
+      <View style={styles.tableHeader}>
+        <Text style={styles.headerCell}>Item</Text>
+        <Text style={styles.headerCell}>Qty</Text>
+        <Text style={styles.headerCell}>Price</Text>
+      </View>
+      {data.map((row, index) => (
+        <View style={styles.tableRow} key={index}>
+          <Text style={styles.cell}>{row.item}</Text>
+          <Text style={styles.cell}>{row.qty}</Text>
+         
+         
+        </View>
+      ))}
+    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, // Take up the entire available space
-    padding: 16,
-  },
-  item: {
-    backgroundColor: 'lightgray',
-    padding: 16,
-    marginVertical: 8,
-    borderRadius: 8,
-  },
-  itemText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-});
+    container: {
+      flex: 1,
+      backgroundColor: '#fff',
+      padding: 20,
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 20,
+    },
+    card: {
+      marginVertical: 10,
+    },
+    label: {
+      fontSize: 18,
+      marginBottom: 5,
+    },
+    input: {
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 15,
+      paddingLeft: 10,
+    },
+    table: {
+      borderWidth: 1,
+      borderColor: '#000',
+      margin: 10,
+      flexDirection: 'column',
+    },
+    tableHeader: {
+      flexDirection: 'row',
+      backgroundColor: '#333',
+      justifyContent: 'space-between',
+    },
+    tableRow: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc',
+    },
+    headerCell: {
+      flex: 1,
+      color: '#fff',
+      padding: 10,
+      fontWeight: 'bold',
+      textAlign: 'center',
+    },
+    cell: {
+      flex: 1,
+      padding: 10,
+      textAlign: 'center',
+    },
+  });
 
-export default MyFlatList;
+
+export default invoice;

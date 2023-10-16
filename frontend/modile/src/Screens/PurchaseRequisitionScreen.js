@@ -24,7 +24,7 @@ const PurchaseRequisitionScreen  = () => {
   const [qtyarray, setqtyArray] = useState([]);
   const [site, setsite] = useState("");
   const [orderItems,setorderitems]=useState("")
-  const PORT="http://192.168.8.114:8070/"
+  const PORT="http://172.28.10.131:8070/"
 
   function getuserdata(){
     AsyncStorage.getItem('siteData')

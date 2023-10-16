@@ -47,8 +47,13 @@ router.route("/get").get((req,res)=>{
     })
 })
 
-router.route("/processing").get((req,res)=>{
-    order.find({status:"processing"}).then((orders)=>{
+router.route("/processing/:id").get((req,res)=>{
+    let Id = req.params.id;
+    order.find({  "supplierid": {
+        $elemMatch: {
+          "company":Id
+        }
+      },status:"processing"}).then((orders)=>{
         res.json(orders)
     }).catch((err)=>{
         console.log(err)
