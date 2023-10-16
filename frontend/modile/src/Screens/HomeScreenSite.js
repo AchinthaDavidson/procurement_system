@@ -10,7 +10,7 @@ const HomeScreen = ({ navigation }) => {
   const [selectedItem, setSelectedItem] = useState([]);
   const [site, setsite] = useState([]);
   const [userId,setId]=useState("");  
-  const PORT="http://172.28.10.131:8070/"
+  const PORT="http://192.168.1.11:8070/"
   
   function getuserdata(){
     AsyncStorage.getItem('userData')

@@ -7,7 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Option 1'); // Initial selected option
-  const PORT="http://172.28.10.131:8070/"
+  const PORT="http://192.168.1.11:8070/"
   const navigateToScreen = (screenName) => {
     navigation.navigate(screenName);
   };

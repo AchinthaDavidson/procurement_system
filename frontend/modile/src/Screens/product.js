@@ -10,7 +10,7 @@ const Product = () => {
   const [qty, setqty] = useState('');
   const [userId,setId]=useState("");  
   const [data, setdata] = useState([]);
-  const PORT="http://192.168.8.114:8070/"
+  const PORT="http://192.168.1.11:8070/"
 
   async function getuserdata(){
    await AsyncStorage.getItem('userData')

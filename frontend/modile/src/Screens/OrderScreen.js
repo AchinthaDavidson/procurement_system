@@ -10,7 +10,7 @@ const OrderScreen = () => {
  
   const [data, setdata1] = useState([]);
   const [site, setsite] = useState("");
-  const PORT="http://192.168.8.114:8070/"
+  const PORT="http://192.168.1.11:8070/"
   // const data = [
   //   { date: '2023-10-14', item: 'Sample Item 1', qty: 10, status: 'Shipped' },
   //   { date: '2023-10-15', item: 'Sample Item 2', qty: 5, status: 'Pending' },

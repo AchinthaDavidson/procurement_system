@@ -11,7 +11,7 @@ const AuthScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-const PORT="http://172.28.10.131:8070/"
+const PORT="http://192.168.1.11:8070/"
 
   const toggleAuthType = () => {
     setIsLogin(!isLogin);
