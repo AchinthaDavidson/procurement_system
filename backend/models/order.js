@@ -22,6 +22,9 @@ const orderSchema=new Schema({
     },
     date:{
         type:Date
+    },
+    price:{
+        type:String
     }
    
     

@@ -13,7 +13,7 @@ router.route("/add").post(validate([
     const siteid = req.body.siteid
     const status = "order_requerested"
     const date =new Date().toUTCString();
-
+    const price=""
 
 
     const newproduct = new order({
@@ -21,7 +21,8 @@ router.route("/add").post(validate([
         qty,
         siteid,
         status,
-        date
+        date,
+        price
     })
 
     newproduct.save().then(() => {
@@ -88,6 +89,32 @@ router.route("/update/:id").put(async(req,res)=>{
         res.status(500).send({status:"catogories update failed", error:err});
     })
 })
+
+
+router.route("/updateorder/:id").put(async(req,res)=>{
+
+    let Id = req.params.id;
+  
+    
+  
+   
+   
+    const price=req.body.price
+    const status="preparing_order"
+
+  
+    const updateorder = {price,status};  
+//   console.log(updatemanager)
+    await order.updateOne({_id:Id},{$set:updateorder})
+    .then(()=>{
+        res.status(200).send({status:"manager updated"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"manager update failed", error:err});
+    })
+  })
+
+
 
 // //count
 // const  date1 =d.getMonth()+1+"-"+d.getFullYear();

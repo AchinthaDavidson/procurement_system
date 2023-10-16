@@ -1,11 +1,13 @@
 import React, { useState,useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet,ScrollView } from 'react-native';
+import { View, Text, TextInput, StyleSheet,ScrollView ,Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const invoice = () => {
+const Invoice = () => {
     const [userId,setId]=useState(""); 
     const [data, setdata] = useState([]);
+    const[price,setprice]=useState([]);
+
     const PORT="http://172.28.10.131:8070/"
 
     async function getuserdata(){
@@ -38,6 +40,36 @@ const invoice = () => {
         fetchSiteManager();
       },[getuserdata]);
 
+      const handlePriceChange = (price, index) => {
+       
+        setprice(price);
+      }
+
+      const handleActionClick = (id) => {
+      
+        addorder(price,id)
+        
+        console.log(id);
+      };
+      async function addorder(price,id){
+        const data = {
+            price: price,
+            
+          };
+    console.log(data)
+          await axios.put(""+PORT+"order/updateorder/"+id, data)
+          .then((response) => {
+           
+            alert('new item added ');
+          
+          })
+          .catch((error) => {
+            // console.error('An error occurred:', error);
+            alert('An error occurred while authenticating. Please try again.');
+          });
+    
+      }
+
   return (
     <ScrollView>
     <View style={styles.table}>
@@ -50,7 +82,16 @@ const invoice = () => {
         <View style={styles.tableRow} key={index}>
           <Text style={styles.cell}>{row.item}</Text>
           <Text style={styles.cell}>{row.qty}</Text>
-         
+           {/* <Text style={styles.cell}>{row.qty}</Text> */}
+          <TextInput
+            style={styles.priceInput}
+            // value={row.price}
+            onChangeText={(text) => handlePriceChange(text, index)}
+          />
+          <Button
+            title="Action"
+            onPress={() => handleActionClick(row._id)}
+          />
          
         </View>
       ))}
@@ -113,7 +154,20 @@ const styles = StyleSheet.create({
       padding: 10,
       textAlign: 'center',
     },
+    npriceInput: {
+      flex: 1,
+      padding: 10,
+      textAlign: 'center',
+    },
+    priceInput: {
+      width: '20%',
+      height: 40,
+      borderColor: 'gray',
+      borderWidth: 1,
+      marginBottom: 10,
+      paddingLeft: 10,
+    },
   });
 
 
-export default invoice;
+export default Invoice;
