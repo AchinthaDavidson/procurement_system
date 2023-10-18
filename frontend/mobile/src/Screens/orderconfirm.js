@@ -25,7 +25,7 @@ const Card = ({ item, onAccept, onReject }) => {
 };
 const MyFlatList = () => {
 
-  const PORT="http://172.28.30.199:8070/"
+  const PORT="http://172.28.29.207:8070/"
   const [site, setsite] = useState("");
   const [data, setdata1] = useState([]);
 

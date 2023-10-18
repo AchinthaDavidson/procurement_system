@@ -1,36 +1,83 @@
-import React, { useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import { View, Text, Button, Image, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-
+import {Picker} from "@react-native-picker/picker"
+// import {PORT } from '@env';
 
 const HomeScreen = ({ navigation }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Option 1'); // Initial selected option
-  const PORT="http://172.28.30.199:8070/"
-  const navigateToScreen = (screenName) => {
-    navigation.navigate(screenName);
-  };
-
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
+  const [selectedItem, setSelectedItem] = useState([]);
+  const [site, setsite] = useState([]);
+  const [userId,setId]=useState("");  
+  const PORT="http://172.28.29.207:8070/"
+  
+  function getuserdata(){
     AsyncStorage.getItem('userData')
     .then(data => {
       if (data !== null) {
         const userData = JSON.parse(data);
-        console.log(userData._id); // This will log the parsed object
+       setId(userData._id)
+       console.log(userId)
       }
-    })
+    }) 
     .catch(error => {
       console.error(error);
     });
-  
 
+  }
+  getuserdata()
+
+  // useEffect(() => {
+  //         function getsitemanager() {
+  //           axios.get(""+PORT+"site/"+userId).then((res) => {
+            
+  //             setsite(res.data);
+  //             console.log(orders[1])
+  //           });
+  //         }
+  //         getsitemanager();
+  //       }, []);
+
+        useEffect(() => {
+          // Define an async function
+          async function fetchSiteManager() {
+            try {
+              const response = await axios.get(`${PORT}site/${userId}`);
+              setsite(response.data);
+              console.log(site[1]);
+
+            } catch (error) {
+              // console.error('Error fetching data:', error);
+            }
+          }
+      
+          // Call the async function inside useEffect
+          fetchSiteManager();
+        }, [setsite]);
+
+  const navigateToScreen = (screenName) => {
+    if(selectedItem){
+      AsyncStorage.setItem('siteData', JSON.stringify(selectedItem));
+      navigation.navigate(screenName);
+    }
+    else{
+      alert("select Site First");
+    }
+    
+    
+    console.log(selectedItem)
+  };
+
+  const toggleModal = () => {
+    setIsModalVisible(!isModalVisible);
   };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>D a s h b o a r d</Text>
+
+        {/* <Text style={styles.name}>{"\n"}SITE MANAGER</Text> */}
         <TouchableOpacity onPress={toggleModal}>
           <Image
             source={require('../../assets/profile.png')} // Replace with the actual path to your image
@@ -38,6 +85,9 @@ const HomeScreen = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
+
+      
+
       <Modal
         visible={isModalVisible}
         animationType="fade"
@@ -52,7 +102,7 @@ const HomeScreen = ({ navigation }) => {
                 </View>
             </TouchableOpacity>
          
-         
+           
             <Button title="Logout" onPress={() => {navigation.navigate('Auth'); }}/>
           </View>
         </View>
@@ -61,42 +111,38 @@ const HomeScreen = ({ navigation }) => {
           source={require('../../assets/background.jpg')} // Replace with the actual path to your image
           style={styles.image1}
         />
+
+<View>
+      <Text style={styles.labelText} >Select Site</Text>
+      <Picker
+      style={styles.picker}
+        selectedValue={selectedItem}
+        onValueChange={(itemValue, itemIndex) => setSelectedItem(itemValue)}
+      >
+        {site.map(item => (
+          <Picker.Item key={item._id} label={item.name} value={item} />
+        ))}
+      </Picker>
+      
+    </View>
+
       <View style={styles.cardContainer}>
        {/* Card 1 - Purchase Requisition Form */}
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigateToScreen('Invoice')}
+        onPress={() => navigateToScreen('PurchaseRequisition')}
       >
-        <Text style={styles.cardTitle}>Invoice</Text>
-        <Image
-        source={require('../../assets/invoice.png')} // Replace with the actual path to your image
-          style={styles.imageinv}
-        />
-
+        <Text style={styles.cardTitle}>Purchase Requisition Form</Text>
+        <Image source={require('../../assets/formicon.png')} style={styles.btnform}/>
       </TouchableOpacity>
 
       {/* Card 2 - Purchase Order Form */}
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigateToScreen('Product')}
+        onPress={() => navigateToScreen('Order')}
       >
-        <Text style={styles.cardTitle}>Product</Text>
-        <Image
-        source={require('../../assets/product.png')} // Replace with the actual path to your image
-          style={styles.imageinv}
-        />
-      </TouchableOpacity>
-
-      {/* Card 3 - Chat */}
-      <TouchableOpacity
-        style={styles.card}
-        onPress={() => navigateToScreen('Orderconfirm')}
-      >
-        <Text style={styles.cardTitle}>Chat</Text>
-        <Image
-        source={require('../../assets/chat.png')} // Replace with the actual path to your image
-          style={styles.imageinv}
-        />
+        <Text style={styles.cardTitle}>Order</Text>
+        <Image source={require('../../assets/ordericon.png')} style={styles.btnform}/>
       </TouchableOpacity>
 
      
@@ -121,19 +167,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: '800',
+    fontWeight: 'bold',
+    marginLeft: '30%',
     color: "yellow",
-    marginLeft: '25%'
   },
+  
   image1: {
     width: '100%',
     height: '20%',
     // resizeMode: 'contain',
-  },
-  imageinv: {
-    width: '15%',
-    height: '30%',
-    marginTop: '5%'
   },
   image: {
     width: 40,
@@ -150,16 +192,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end', // Vertical alignment: 'center', 'flex-start', or 'flex-end'
     },
   cardContainer: {
-    marginTop: '10%',
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
     padding: 20,
+
   },
   card: {
-    width: '80%',
-    height: '50%',
+    width: '90%',
+
     aspectRatio: 2,
     backgroundColor: 'lightgray',
     borderRadius: 10,
@@ -167,11 +209,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginVertical: 10,
     backgroundColor: '#c266ff'
+
   },
   cardTitle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: 'white'
+
+  },
+  btnform: {
+    width: '15%',
+    height: '35%',
+    marginTop: '5%'
   },
   modalContainer: {
     flex: 1,
@@ -182,7 +231,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '45%',
-    backgroundColor: 'white',
+    backgroundColor: '#4c0080',
     padding: 20,
     
     // borderRadius: 10,
@@ -193,9 +242,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 10,
   },
-  
-
+  labelText: {
+    textAlign:'center',
+    fontSize: 20,
+    marginBottom: 10,
+    color: "white",
+    marginTop: '10%'
+  },
+  picker: {
+    alignSelf:'center',
+    height: 50,
+    width: 200,
+    backgroundColor: '#eee',
+    borderRadius:10,
+  },
 });
 
 export default HomeScreen;
-  
