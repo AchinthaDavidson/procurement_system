@@ -8,6 +8,7 @@ import PurchaseRequisitionScreen from './src/Screens/PurchaseRequisitionScreen';
 import OrderScreen from './src/Screens/OrderScreen'; // Import your Purchase Order Form screen component
 import Product from './src/Screens/product';
 import Invoice from './src/Screens/invoice'
+import Orderconfirm from "./src/Screens/orderconfirm"
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -21,6 +22,9 @@ const App = () => {
         <Stack.Screen name="Order" component={OrderScreen} />
         <Stack.Screen name="Product" component={Product} />
         <Stack.Screen name="Invoice" component={Invoice} />
+        <Stack.Screen name="Orderconfirm" component={Orderconfirm} />
+
+
        
       </Stack.Navigator>
     </NavigationContainer>

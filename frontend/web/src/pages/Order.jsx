@@ -152,7 +152,8 @@ console.log(addedData)
 
         <div>
           <input type="text" style={{ height: "40px" }} placeholder=" Search Items..." onChange={(event) => {
-            setSearchTerm(event.tar0get.value);
+            setSearchTerm(event.target.value);
+            // alert(searchTerm)
           }} />
 
 
@@ -166,6 +167,7 @@ console.log(addedData)
               } else if (
                 val.name.toLowerCase().includes(searchTerm.toLowerCase())
               ) {
+                
                 return val;
               }
             }).map((items, index2) => (

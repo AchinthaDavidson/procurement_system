@@ -25,10 +25,11 @@ router.route("/add").post(validate([
         price
     })
 
-    newproduct.save().then(() => {
-        res.json("save details")
+   await newproduct.save().then(() => {
+    res.status(200).send({status:"order details added"})
     }).catch((err) => {
         console.log(err);
+        res.status(500).send({status:"order details adding failed", error:err});
     })
 })
 
@@ -48,6 +49,14 @@ router.route("/get").get((req,res)=>{
     })
 })
 
+router.route("/getorder").get((req,res)=>{
+    order.find({status:"preparing_order"}).then((orders)=>{
+        res.json(orders)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
 router.route("/processing/:id").get((req,res)=>{
     let Id = req.params.id;
     order.find({  "supplierid": {
@@ -60,6 +69,20 @@ router.route("/processing/:id").get((req,res)=>{
         console.log(err)
     })
 })
+
+router.route("/accepted/:id").get((req,res)=>{
+    let Id = req.params.id;
+    order.find({  "supplierid": {
+        $elemMatch: {
+          "company":Id
+        }
+      },status:"accepted"}).then((orders)=>{
+        res.json(orders)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+
 
 router.route("/display/:id").get((req,res)=>{
     let Id = req.params.id;
@@ -94,11 +117,6 @@ router.route("/update/:id").put(async(req,res)=>{
 router.route("/updateorder/:id").put(async(req,res)=>{
 
     let Id = req.params.id;
-  
-    
-  
-   
-   
     const price=req.body.price
     const status="preparing_order"
 
@@ -114,7 +132,59 @@ router.route("/updateorder/:id").put(async(req,res)=>{
     })
   })
 
+  router.route("/ok/:id").put(async(req,res)=>{
 
+    let Id = req.params.id;
+   
+    const status="accepted"
+
+  
+    const updateorder = {status};  
+//   console.log(updatemanager)
+    await order.updateOne({_id:Id},{$set:updateorder})
+    .then(()=>{
+        res.status(200).send({status:"manager updated"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"manager update failed", error:err});
+    })
+  })
+
+  router.route("/bad/:id").put(async(req,res)=>{
+
+    let Id = req.params.id;
+   
+    const status="order_requerested"
+
+  
+    const updateorder = {status};  
+//   console.log(updatemanager)
+    await order.updateOne({_id:Id},{$set:updateorder})
+    .then(()=>{
+        res.status(200).send({status:"manager updated"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"manager update failed", error:err});
+    })
+  })
+
+  router.route("/deliver/:id").put(async(req,res)=>{
+
+    let Id = req.params.id;
+   
+    const status="deliver"
+
+  
+    const updateorder = {status};  
+//   console.log(updatemanager)
+    await order.updateOne({_id:Id},{$set:updateorder})
+    .then(()=>{
+        res.status(200).send({status:"manager updated"})
+    }).catch((err)=>{
+        console.log(err);
+        res.status(500).send({status:"manager update failed", error:err});
+    })
+  })
 
 // //count
 // const  date1 =d.getMonth()+1+"-"+d.getFullYear();

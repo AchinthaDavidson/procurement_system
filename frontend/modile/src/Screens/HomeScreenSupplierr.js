@@ -90,7 +90,7 @@ const HomeScreen = ({ navigation }) => {
       {/* Card 3 - Chat */}
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigateToScreen('Chat')}
+        onPress={() => navigateToScreen('Orderconfirm')}
       >
         <Text style={styles.cardTitle}>Chat</Text>
         <Image

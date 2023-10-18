@@ -48,6 +48,11 @@ const Sidebar = ({children}) => {
             path:"/Payment",
             name:"Payment",
             icon:<MdPayment/>
+        },
+        {
+            path:"/placeorder",
+            name:"Payment",
+            icon:<MdPayment/>
         }
     ]
     return (
