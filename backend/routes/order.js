@@ -171,7 +171,7 @@ router.route("/updateorder/:id").put(async(req,res)=>{
   router.route("/deliver/:id").put(async(req,res)=>{
 
     let Id = req.params.id;
-   
+   console.log(Id)
     const status="deliver"
 
   

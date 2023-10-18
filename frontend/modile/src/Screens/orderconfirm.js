@@ -17,7 +17,7 @@ const Card = ({ item, onAccept, onReject }) => {
       <Text>Quantity: {item.qty}</Text>
       <View style={styles.buttonContainer}>
       
-        <Button title="Reject" onPress={() => onReject(item.id)} color="red" />
+        <Button title="Reject" onPress={() => onReject(item._id)} color="red" />
         <Button title="Accept" onPress={() => onAccept(item._id)} color="green" />
       </View>
     </View>
@@ -68,11 +68,32 @@ const MyFlatList = () => {
   const handleAccept = (itemId) => {
     // Handle accept action for the given item ID
     console.log(`Accepted item with ID: ${itemId}`);
+    axios.put(""+PORT+`order/deliver/${itemId}`)
+      .then((response) => {
+       
+        alert('new item added ');
+      
+      })
+      .catch((error) => {
+        console.error('An error occurred:', error);
+        alert('An error occurred while authenticating. Please try again.');
+      });
+    
   };
 
   const handleReject = (itemId) => {
     // Handle reject action for the given item ID
     console.log(`Rejected item with ID: ${itemId}`);
+    axios.put(""+PORT+`order/bad/${itemId}`)
+      .then((response) => {
+       
+        alert('new item added ');
+      
+      })
+      .catch((error) => {
+        console.error('An error occurred:', error);
+        alert('An error occurred while authenticating. Please try again.');
+      });
   };
 
   return (

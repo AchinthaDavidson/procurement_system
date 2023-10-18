@@ -18,6 +18,7 @@ const HomeScreen = ({ navigation }) => {
       if (data !== null) {
         const userData = JSON.parse(data);
        setId(userData._id)
+       console.log(userId)
       }
     }) 
     .catch(error => {
@@ -45,6 +46,7 @@ const HomeScreen = ({ navigation }) => {
               const response = await axios.get(`${PORT}site/${userId}`);
               setsite(response.data);
               console.log(site[1]);
+
             } catch (error) {
               // console.error('Error fetching data:', error);
             }
