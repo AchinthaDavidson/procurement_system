@@ -11,7 +11,7 @@ const AuthScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-const PORT="http://192.168.1.11:8070/"
+const PORT="http://172.28.30.199:8070/"
 
   const toggleAuthType = () => {
     setIsLogin(!isLogin);
@@ -24,9 +24,10 @@ const PORT="http://192.168.1.11:8070/"
       // navigation.navigate('SiteHome');
       await axios.post(`${PORT}supplier/login`, data)
       .then((response) => {
-        navigation.navigate('SupplierHome');
+        AsyncStorage.setItem('supplier', JSON.stringify(response.data.message));
        console.log(response.data.message)
        AsyncStorage.setItem('userData', JSON.stringify(response.data.message));
+       navigation.navigate('SupplierHome');
       })
       .catch(() => {
          axios.post(""+PORT+"sitemanager/login", data)
