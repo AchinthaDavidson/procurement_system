@@ -65,11 +65,11 @@ function Ordersupplier() {
               <th colSpan={5}>Site: {items.name}</th>
             </tr>
             <tr className={styles.tablecols}>
-              <td>Date</td>
-              <td>Item</td>
-              <td>Required quantity</td>
-              <td>Quantity ordered by each supplier</td>
-              <td>Status</td>
+              <td><b>Date</b></td>
+              <td><b>Item</b></td>
+              <td><b>Required quantity</b></td>
+              <td><b>Quantity ordered by each supplier</b></td>
+              <td><b>Status</b></td>
             </tr>
            
               {

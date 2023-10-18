@@ -83,7 +83,7 @@ function Addsitemanager() {
     axios
     .post("http://localhost:8070/sitemanager/add", values)
     .then(() => {
-      toast.success("New Site manager added successfully");
+      toast.success("Login credentials sent to your email");
     })
     .catch((err) => {
       toast.error("Your request was unsuccessfull");

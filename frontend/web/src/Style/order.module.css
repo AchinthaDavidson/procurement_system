@@ -1,3 +1,10 @@
+.searchbar{
+  width: 50%;
+  margin-left: 25%;
+  margin-bottom: 5%;
+  border-radius: 10px;
+}
+
 .outertable{
     width: 75%;
     margin: auto;
@@ -6,6 +13,7 @@
 .innertable{
     width: 100%;
     margin-bottom: 50px;
+    border-radius: 0.5;
 }
 
 .border{
@@ -38,10 +46,19 @@
     border: none;
 }
 
+.innertable tr{
+  border-radius: 0.5;
+  
+}
+
 .tabattributes{
     font-weight: bolder;
     background-color: rgba(39, 27, 52, 0.964);
     color: white;
+}
+
+.tabattributes>td{
+  padding: 10px;
 }
 
 .siterow{
@@ -62,7 +79,7 @@
     color: black;
   }
   
-  .table th,
+  /* .table th,
   .table td {
     padding: 10px;
     border: 1px solid #ddd;
@@ -79,7 +96,7 @@
   
   .table td {
     background-color: white;
-  }
+  } */
   
   .table button {
     background-color: transparent;
@@ -94,3 +111,21 @@
     text-decoration: none;
   }
 
+ .supordtab{
+  width: 50%;
+ } 
+
+.supordtab th{
+  font-weight: bolder;
+  background-color: rgba(53, 39, 68, 0.698);
+  padding: 5px;
+  margin: auto;
+  color: white;
+  font-weight: 900;
+}
+
+.delbtn{
+  width: 100%;
+  padding: 5px;
+  border: none;
+}

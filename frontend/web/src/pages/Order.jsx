@@ -4,6 +4,7 @@ import Niv from '../components/Niv';
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styles from '../Style/order.module.css';
+import { FiTrash2 } from "react-icons/fi";
 
 function Order() {
 
@@ -107,10 +108,10 @@ console.log(addedData)
     axios
     .put(`http://localhost:8070/site/update/${id}`, values)
     .then(() => {
-      toast.success("New Supplier added successfully");
+      toast.success("Order placed successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier added unsuccessfully");
+      toast.error("Request Failed!");
     });
 
     setAddedData([])
@@ -131,10 +132,10 @@ console.log(addedData)
     axios
       .put(link, data1)
       .then(() => {
-        toast.success("New Supplier added successfully");
+        toast.success("Item added successfully");
       })
       .catch((err) => {
-        toast.error("New Supplier added unsuccessfully");
+        toast.error("Request Failed!");
       });
   }
 
@@ -151,7 +152,7 @@ console.log(addedData)
       <div className="data">
 
         <div>
-          <input type="text" style={{ height: "40px" }} placeholder=" Search Items..." onChange={(event) => {
+          <input type="text" className={styles.searchbar} style={{ height: "40px" }} placeholder=" Search Items..." onChange={(event) => {
             setSearchTerm(event.target.value);
             // alert(searchTerm)
           }} />
@@ -172,12 +173,12 @@ console.log(addedData)
               }
             }).map((items, index2) => (
               <>
-                <tr >
+                <tr>
                   <th>Site: {items.name}</th>
 
                 </tr>
 
-                <table className={styles.innertable} border="1">
+                <table className={styles.innertable} >
                   <tr className={styles.tabattributes}>
                     <td>Item</td>
                     <td>Quantity Required</td>
@@ -232,7 +233,7 @@ console.log(addedData)
 
                         </td>
                         <td>
-                          <input type="number" min="0" max={parseInt(items.qty, 10)} id="numberInput" onChange={handleInputChange} />
+                          <input type="number" min="1" max={parseInt(items.qty, 10)} id="numberInput" onChange={handleInputChange} />
                         </td>
                         <td>
                           <button className={styles.addbtn}
@@ -245,7 +246,7 @@ console.log(addedData)
                       <tr>
                         <td colSpan={5} id={index1} hidden>
 
-                          <table id="new">
+                          <table id="new" className={styles.supordtab}>
                             <tr>
                               <th>Supplier</th>
                               <th>Ordered Quantity</th>
@@ -261,7 +262,7 @@ console.log(addedData)
                                 <td>{item.company}</td>
                                 <td>{item.qty}</td>
                                 <td>{item.itemprice*Number(item.qty)}</td>
-                                <td><button onClick={() => onDelete(item.index,item.itemprice*Number(item.qty))} >delete</button></td>
+                                <td><button className={styles.delbtn} onClick={() => onDelete(item.index,item.itemprice*Number(item.qty))} ><FiTrash2 size={20}/></button></td>
 
                               </tr>
                             ))}
