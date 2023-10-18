@@ -78,7 +78,7 @@ const initialValues = {
       toast.success("New Supplier added successfully");
     })
     .catch((err) => {
-      toast.error("New Supplier was not added successfully");
+      toast.error("Request Failed!");
     });
 
    
@@ -109,10 +109,10 @@ const initialValues = {
     axios
     .delete(`http://localhost:8070/supplier/delete/${userId}`)
     .then(() => {
-      toast.success("New Supplier added successfully");
+      toast.success("Supplier deleted");
     })
     .catch((err) => {
-      toast.error("New Supplier was not added successfully");
+      toast.error("Your request was unseccessful");
     });
     setUsers(users.filter((user) => user._id !== userId));
 
@@ -139,10 +139,10 @@ const initialValues = {
     axios
     .put(`http://localhost:8070/supplier/update/${user._id}`, values)
     .then(() => {
-      toast.success("New Supplier added successfully");
+      toast.success("Suppplier details updated");
     })
     .catch((err) => {
-      toast.error("New Supplier was not added successfully");
+      toast.error("Your request was unseccessful");
     });
 
     getsitemanager();

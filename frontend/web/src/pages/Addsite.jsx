@@ -41,10 +41,10 @@ function Addsite() {
         axios
         .post("http://localhost:8070/site/add", values)
         .then(() => {
-          toast.success("New Supplier added successfully");
+          toast.success("New Site added successfully");
         })
         .catch((err) => {
-          toast.error("New Supplier added unsuccessfully");
+          toast.error("Your request was unsuccessful");
         });
       
         resetForm();
@@ -74,10 +74,10 @@ function Addsite() {
         axios
         .delete(`http://localhost:8070/site/delete/${userId}`)
         .then(() => {
-          toast.success("New Supplier added successfully");
+          toast.success("Deleted succesfully");
         })
         .catch((err) => {
-          toast.error("New Supplier added unsuccessfully");
+          toast.error("Your request was unsuccessful");
         });
         setUsers(users.filter((user) => user._id !== userId));
         getsitemanager();
@@ -94,7 +94,7 @@ function Addsite() {
       const handleSave = (user) => {
         // Implement save functionality here
         // console.log(`Save user: ${user._id}, Name: ${editedName}, Email: ${editedEmail}`);
-    alert(editesitemanager)
+    // alert(editesitemanager)
         const values={
           siteManagerName:editesitemanager,
           budget:editedbudget
@@ -102,10 +102,10 @@ function Addsite() {
         axios
         .put(`http://localhost:8070/site/update/${user._id}`, values)
         .then(() => {
-          toast.success("New Supplier added successfully");
+          toast.success("Saved changes");
         })
         .catch((err) => {
-          toast.error("New Supplier added unsuccessfully");
+          toast.error("Your request was unsuccessful");
         });
     
     

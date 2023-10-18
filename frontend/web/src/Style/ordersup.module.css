@@ -49,10 +49,6 @@
     color: white;
 }
 
-.tablecols{
-    background-color: rgba(53, 39, 68, 0.698);
-}
-
 .table {
     width: 60%;
     margin: auto;
@@ -92,4 +88,8 @@
   
   .table button:hover {
     text-decoration: none;
+  }
+
+  .tablecols{
+    color: red;
   }
