@@ -87,14 +87,14 @@ const HomeScreen = ({ navigation }) => {
         />
       </TouchableOpacity>
 
-      {/* Card 3 - Chat */}
+      {/* Card 3 - Confirm Orders */}
       <TouchableOpacity
         style={styles.card}
         onPress={() => navigateToScreen('Orderconfirm')}
       >
-        <Text style={styles.cardTitle}>Chat</Text>
+        <Text style={styles.cardTitle}>Confirm Orders</Text>
         <Image
-        source={require('../../assets/chat.png')} // Replace with the actual path to your image
+        source={require('../../assets/confirm.png')} // Replace with the actual path to your image
           style={styles.imageinv}
         />
       </TouchableOpacity>
