@@ -41,6 +41,8 @@ app.use("/sitemanager", sitemanager);
 const site= require("./routes/site.js");
 app.use("/site", site);
 
+const chat= require("./routes/chat.js");
+app.use("/chat", chat);
 
 app.listen(PORT,()=>{
     console.log('Sever is runing on port 8070')

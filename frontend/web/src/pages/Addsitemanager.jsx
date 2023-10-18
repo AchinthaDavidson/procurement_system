@@ -143,7 +143,7 @@ function Addsitemanager() {
     axios
     .put(`http://localhost:8070/sitemanager/update/${user._id}`, values)
     .then(() => {
-      toast.success("New Site manager added successfully");
+      toast.success("Details updated successfully");
     })
     .catch((err) => {
       toast.error("Your request was unsuccessfull");
