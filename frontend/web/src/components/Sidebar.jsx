@@ -10,6 +10,9 @@ import { NavLink } from 'react-router-dom';
 import { FiUserPlus } from "react-icons/fi";
 import { MdPayment } from "react-icons/md";
 import { MdOutlineConstruction } from "react-icons/md";
+import {BsChatDots} from 'react-icons/bs';
+import {AiOutlineUnorderedList} from 'react-icons/ai';
+
 
 const Sidebar = ({children}) => {
     const[isOpen ,setIsOpen] = useState(false);
@@ -51,8 +54,13 @@ const Sidebar = ({children}) => {
         },
         {
             path:"/placeorder",
-            name:"Payment",
-            icon:<MdPayment/>
+            name:"Placed Orders",
+            icon:<AiOutlineUnorderedList/>
+        },
+        {
+            path:"/chat",
+            name:"Messages",
+            icon:<BsChatDots/>
         }
     ]
     return (

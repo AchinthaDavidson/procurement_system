@@ -10,6 +10,7 @@ import Supplierreg from './pages/SupplierReg'
 import Addsite from './pages/Addsite';
 import Place_order from "./pages/Placed_order"
 // import Loginfrom from './components/logn';
+import Chat from "./pages/Chat";
 const App = () => {
   return (
    
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="/Supplierreg" element={<Supplierreg />} />
           <Route path="/Addsite" element={<Addsite/>} />
           <Route path='/placeorder' element={<Place_order/>}/>
+          <Route path='/chat' element={<Chat/>}/>
         </Routes>
       </Sidebar>
      
