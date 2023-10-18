@@ -8,7 +8,7 @@ const Invoice = () => {
     const [data, setdata] = useState([]);
     const[price,setprice]=useState([]);
 
-    const PORT="http://192.168.1.11:8070/"
+    const PORT="http://172.28.30.199:8070/"
 
     async function getuserdata(){
         await AsyncStorage.getItem('userData')
